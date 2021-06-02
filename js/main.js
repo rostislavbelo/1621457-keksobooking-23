@@ -1,8 +1,8 @@
-const isNumber = (n) => typeof n === "number" && !Number.isNaN(n);
+const isNumber = (value) => typeof n === 'number' && !Number.isNaN(value);
 
 const getRandomFraction = (min = 0, max = 0, dec = 0) => {
   if (!(isNumber(min) && isNumber(max) && isNumber(dec))) {
-    throw new Error("Все аргументы должны быть числами");
+    throw new Error('Все аргументы должны быть числами');
   }
 
   const from = Math.min(min, max);
@@ -17,3 +17,5 @@ getRandomFraction(0, 12, 3);
 const getRandomInteger = (min, max) => getRandomFraction(min, max, 0);
 
 getRandomInteger(0, 33);
+
+/* const isNumber = n => typeof n === 'number' && !Number.isNaN(n); */
