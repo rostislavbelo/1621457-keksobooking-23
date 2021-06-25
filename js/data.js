@@ -44,7 +44,7 @@ const getAd = (index) => {
       checkout: timing,
       features: createArrayRandom(FEATURES),
       description: getRandomArrayElement(DESCRIPTIONS),
-      photos: createArrayRandom(PHOTOS)
+      photos: createArrayRandom(PHOTOS),
     },
     location: {
       lat,
