@@ -32,7 +32,7 @@ const isNumber = (value) => typeof value === 'number' && !Number.isNaN(value) &&
 
 const getRandomFraction = (min = 0, max = 0, dec = 0) => {
   if (!(isNumber(min) && isNumber(max) && isNumber(dec))) {
-    throw new Error('Все аргументы должны быть числами, равными или больше нуля');
+    throw new Error('Все аргументы должны быть числами равными или болше нуля');
   }
 
   const from = Math.min(min, max);
@@ -44,55 +44,45 @@ const getRandomFraction = (min = 0, max = 0, dec = 0) => {
 
 const getRandomInteger = (min, max) => getRandomFraction(min, max, 0);
 
-const makeUniqueRandomIntegerGenerator = (min, max) => {
-  const previousValues = [];
+const getPadLeft = (index) => `${index}`.padStart(2, '0');
 
-  return () => {
-    let currentValue = getRandomInteger(min, max);
-    if (previousValues.length >= (max - min + 1)) {
-      throw new Error(`Перебраны все числа из диапазона от ${min} до ${max}`);
-    }
-    while (previousValues.includes(currentValue)) {
-      currentValue = getRandomInteger(min, max);
-    }
-    previousValues.push(currentValue);
-    return currentValue;
-  };
-};
+const getUrlAvatar = (index) => `img/avatars/user${getPadLeft(index)}.png`;
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
-const randomAvatarIdx = makeUniqueRandomIntegerGenerator(1, AVATAR_NUMBERS);
+const getRandomBoolean = () => Math.random() >= 0.5;
 
+const createArrayRandom = (items) => {
+  const array = items.filter(getRandomBoolean); //спр1
 
-const getCard = () => {
+  if (array.length < 1) {
+    Math.random() * (items.length); //спр2
+  }
 
-  const padLeft = `${randomAvatarIdx()}`.padStart(2, '0');
+  return array;
+};
 
-  const getAvatar = `img/avatars/user${padLeft}.png`;
-
-  const time = getRandomArrayElement(TIMES);
-
+const getAd = (index) => {
   const lat = getRandomFraction(LOCATION.LAT_MIN, LOCATION.LAT_MAX, 5);
-
   const lng = getRandomFraction(LOCATION.LNG_MIN, LOCATION.LNG_MAX, 5);
+  const timing = getRandomArrayElement(TIMES);
 
   return {
     author: {
-      avatar: getAvatar,
+      avatar: getUrlAvatar(index),
     },
     offer: {
       title: getRandomArrayElement(TITLE),
-      address: `location.${lat}, location.${lng}`,
+      address: `location ${lat} ,location ${lng}`,
       price: getRandomInteger(1, 1000000),
       type: getRandomArrayElement(TYPES),
-      rooms: getRandomInteger(1, 10),
-      guests: getRandomInteger(1, 20),
-      checkin: time,
-      checkout: time,
-      features: FEATURES.slice(getRandomInteger(0, FEATURES.length - 1)),
+      rooms: getRandomInteger(1, 8),
+      guests: getRandomInteger(1, 10),
+      checkin: timing,
+      checkout: timing,
+      features: createArrayRandom(FEATURES),
       description: getRandomArrayElement(DESCRIPTION),
-      photos: PHOTOS.slice(getRandomInteger(0, PHOTOS.length - 1)),
+      photos: createArrayRandom(PHOTOS),
     },
     location: {
       lat,
@@ -101,11 +91,13 @@ const getCard = () => {
   };
 };
 
-getCard();
+const getAds = () => {
+  const ads = [];
+  for (let index = 0; index < AVATAR_NUMBERS; index++) {
+    ads.push(getAd(index + 1)); //спр3
+  }
+  return ads;
+};
 
-// Ниже проверка - вызов в консоль 10 результатов. Закомментировано, чтобы нпм-тест не ругался;
-
-/* for (let i = 1; i <= 10; i++) {
-  console.log(getCard());
-}
- */
+/* const ad = getAds();
+console.log('ad:', ad); */
