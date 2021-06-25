@@ -53,10 +53,10 @@ const getRandomArrayElement = (elements) => elements[getRandomInteger(0, element
 const getRandomBoolean = () => Math.random() >= 0.5;
 
 const createArrayRandom = (items) => {
-  const array = items.filter(getRandomBoolean); //спр1
+  const array = items.filter(getRandomBoolean);
 
   if (array.length < 1) {
-    Math.random() * (items.length); //спр2
+    array.push(items[Math.floor(Math.random() * items.length)]);
   }
 
   return array;
@@ -94,7 +94,7 @@ const getAd = (index) => {
 const getAds = () => {
   const ads = [];
   for (let index = 0; index < AVATAR_NUMBERS; index++) {
-    ads.push(getAd(index + 1)); //спр3
+    ads.push(getAd(index + 1));
   }
   return ads;
 };
