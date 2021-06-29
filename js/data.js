@@ -54,9 +54,11 @@ const getAd = () => {
 
 const getAds = () => {
   const ads = [];
+
   for (let index = 0; index < AVATAR_NUMBERS; index++) {
     ads.push(getAd());
   }
+
   return ads;
 };
 

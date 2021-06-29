@@ -9,7 +9,6 @@ const AVATAR_NUMBERS = 10;
 const PHOTOS_ROOT = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking';
 const GUESTS = ['гостя', 'гостей', 'гостей'];
 const ROOMS = ['комната', 'комнаты', 'комнат'];
-
 const TITLES = [
   'Сдается в аренду крутое жильё',
   'Проживание со всеми удобствами',

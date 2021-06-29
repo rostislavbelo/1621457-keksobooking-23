@@ -33,7 +33,7 @@ const renderCard = (ad) => {
   const photosContainer = card.querySelector('.popup__photos');
   const photoElement = photosContainer.querySelector('.popup__photo');
 
-  const capacityText = `${getPlural(offer.rooms, ROOMS)} для ${getPlural(offer.guests, GUESTS)}`; // Не могу разобраться, еслинту не нравится сочетание точки и впр знака, удалаяю в одном  месте, замечание смещается дальше :(
+  const capacityText = `${getPlural(offer.rooms, ROOMS)} для ${getPlural(offer.guests, GUESTS)}`;
   const timeText = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
 
   setOrRemove(title, offer.title);
