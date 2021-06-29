@@ -1,13 +1,11 @@
 import {
-  AVATAR_NUMBERS
-} from './variables.js';
-
-import {
   getAds
 } from './data.js';
 
-const getNewArray = getAds(AVATAR_NUMBERS);
+import {
+  renderCard
+} from './card.js';
 
-/* const ad = getNewArray;
-console.log('ad:', ad); */
+const ads = getAds();
+renderCard(ads[0]);
 

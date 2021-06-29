@@ -1,4 +1,3 @@
-
 import {
   NUMBER_MIN,
   TIMES,
@@ -14,7 +13,7 @@ import {
   PHOTOS,
   AVATAR_NUMBERS,
   Location
-} from './variables.js';
+} from './constants.js';
 
 import {
   getRandomFraction,
@@ -24,14 +23,14 @@ import {
   getUrlAvatar
 } from './utils.js';
 
-const getAd = (index) => {
+const getAd = () => {
   const lat = getRandomFraction(Location.LAT_MIN, Location.LAT_MAX, LIMIT_SINGS);
   const lng = getRandomFraction(Location.LNG_MIN, Location.LNG_MAX, LIMIT_SINGS);
   const timing = getRandomArrayElement(TIMES);
 
   return {
     author: {
-      avatar: getUrlAvatar(index),
+      avatar: getUrlAvatar(getRandomInteger(NUMBER_MIN, AVATAR_NUMBERS)),
     },
     offer: {
       title: getRandomArrayElement(TITLES),
@@ -56,7 +55,7 @@ const getAd = (index) => {
 const getAds = () => {
   const ads = [];
   for (let index = 0; index < AVATAR_NUMBERS; index++) {
-    ads.push(getAd(index + 1));
+    ads.push(getAd());
   }
   return ads;
 };

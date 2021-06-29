@@ -1,7 +1,7 @@
 import {
   STRING_INDEX,
   MIN_INDEX
-} from './variables.js';
+} from './constants.js';
 
 const isNumber = (value) => typeof value === 'number' && !Number.isNaN(value) && value >= 0;
 
@@ -37,10 +37,28 @@ const createArrayRandom = (items) => {
   return array;
 };
 
+const getPluralIdx = (count) => {
+  const c10 = count % 10;
+  const c100 = count % 100;
+
+  if (c10 === 1 && c100 !== 11) {
+    return 0;
+  }
+
+  if (c10 >= 2 && c10 <= 4 && (c100 < 10 || c100 >= 20)) {
+    return 1;
+  }
+  return 2;
+};
+
+const pluralize = (count, plurals) => plurals[getPluralIdx(count)];
+const getPlural = (count, plurals) => `${count} ${pluralize(count, plurals)}`;
+
 export {
   getRandomFraction,
   getRandomInteger,
   getRandomArrayElement,
   createArrayRandom,
-  getUrlAvatar
+  getUrlAvatar,
+  getPlural
 };
