@@ -1,6 +1,6 @@
 import {
   getPlural
-} from "./utils.js";
+} from './utils.js';
 import {
   AD_TYPES,
   GUESTS,
@@ -10,7 +10,7 @@ import {
   removeExtraFeatures,
   renderPhotos,
   setOrRemove
-} from './dom-utils.js'
+} from './dom-utils.js';
 
 const CARD_TEMPLATE = document.querySelector('#card');
 const MAP_ELEMENT = document.querySelector('.map');
@@ -33,16 +33,16 @@ const renderCard = (ad) => {
   const photosContainer = card.querySelector('.popup__photos');
   const photoElement = photosContainer.querySelector('.popup__photo');
 
-  const capacityText = `${getPlural(offer?.rooms, ROOMS)} для ${getPlural(offer?.guests, GUESTS)}`; // Не могу разобраться, еслинту не нравится сочетание точки и впр знака, удалаяю в одном  месте, замечание смещается дальше :(
+  const capacityText = `${getPlural(offer.rooms, ROOMS)} для ${getPlural(offer.guests, GUESTS)}`; // Не могу разобраться, еслинту не нравится сочетание точки и впр знака, удалаяю в одном  месте, замечание смещается дальше :(
   const timeText = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
 
-  setOrRemove(title, offer?.title);
-  setOrRemove(address, offer?.address);
-  setOrRemove(price, offer?.price, `${offer?.price} Р/ночь`);
-  setOrRemove(type, offer?.type, `${AD_TYPES[offer?.type] ? AD_TYPES[offer?.type] : ''}`);
-  setOrRemove(capacity, offer?.rooms * offer?.guests, capacityText);
-  setOrRemove(time, offer?.checkin?.length * offer?.checkout?.length, timeText);
-  setOrRemove(description, offer?.description);
+  setOrRemove(title, offer.title);
+  setOrRemove(address, offer.address);
+  setOrRemove(price, offer.price, `${offer.price} Р/ночь`);
+  setOrRemove(type, offer.type, `${AD_TYPES[offer.type] ? AD_TYPES[offer.type] : ''}`);
+  setOrRemove(capacity, offer.rooms * offer.guests, capacityText);
+  setOrRemove(time, offer.checkin.length * offer.checkout.length, timeText);
+  setOrRemove(description, offer.description);
 
   avatar.src = author.avatar;
 
