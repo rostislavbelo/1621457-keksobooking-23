@@ -1,13 +1,21 @@
 import {
-  AVATAR_NUMBERS
-} from './variables.js';
-
-import {
   getAds
 } from './data.js';
 
-const getNewArray = getAds(AVATAR_NUMBERS);
+import {
+  renderCard
+} from './card.js';
 
-/* const ad = getNewArray;
-console.log('ad:', ad); */
+import {
+  enableForms,
+  disableForms
+} from './dom-utils.js';
+
+disableForms();
+
+const ads = getAds();
+
+renderCard(ads[0]);
+
+setTimeout(enableForms, 3000);
 

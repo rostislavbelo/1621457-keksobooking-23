@@ -7,12 +7,14 @@ const GUESTS_MAX = 3;
 const PRICE_MAX = 1000000;
 const AVATAR_NUMBERS = 10;
 const PHOTOS_ROOT = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking';
-
+const GUESTS = ['гостя', 'гостей', 'гостей'];
+const ROOMS = ['комната', 'комнаты', 'комнат'];
 const TITLES = [
-  'Сдается в аренду',
+  'Сдается в аренду крутое жильё',
   'Проживание со всеми удобствами',
   'Предлагаем для длительного проживания',
   'Вы захотите вернуться сюда снова',
+  'Наилучшая локация для любителей пеших экскурсий',
 ];
 const TYPES = [
   'palace',
@@ -21,6 +23,13 @@ const TYPES = [
   'bungalow',
   'hotel',
 ];
+const AD_TYPES = {
+  flat: 'Квартира',
+  bungalow: 'Бунгало',
+  house: 'Дом',
+  palace: 'Дворец',
+  hotel: 'Отель',
+};
 const TIMES = [
   '12:00',
   '13:00',
@@ -39,6 +48,7 @@ const DESCRIPTIONS = [
   'Апартаменты комфорт-класса для состоятельного гостя: дорого, но всё по-богатому',
   'Суперквартира недалеко от центра и тусовки филлипинских девушек',
   'Восхитительные виды из окон и приветливые глухониемые соседи',
+  'У всех соседей есть антитела',
 ];
 const PHOTOS = [
   `${PHOTOS_ROOT}/duonguyen-8LrGtIxxa4w.jpg`,
@@ -67,5 +77,8 @@ export {
   TIMES,
   FEATURES,
   PHOTOS,
-  Location
+  Location,
+  AD_TYPES,
+  GUESTS,
+  ROOMS
 };
