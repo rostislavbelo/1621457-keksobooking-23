@@ -44,10 +44,10 @@ const renderCard = (ad) => {
   setOrRemove(time, offer.checkin.length * offer.checkout.length, timeText);
   setOrRemove(description, offer.description);
 
-  avatar.src = author.avatar;
-
   if (!author.avatar) {
     avatar.remove();
+  } else {
+    avatar.src = author.avatar;
   }
 
   removeExtraFeatures(features, offer.features);
