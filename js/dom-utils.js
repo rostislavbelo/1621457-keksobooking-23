@@ -68,8 +68,8 @@ const switchForm = (form, className, selector, enable) => {
 };
 
 const switchForms = (enable) => {
-  FORMS.forEach(({ element, disabledClass, selector }) => {
-    switchForm(element, disabledClass, selector, enable);
+  FORMS.forEach((form) => {
+    switchForm(form.element, form.disabledClass, form.selector, enable);
   });
 };
 
@@ -83,4 +83,3 @@ export {
   disableForms,
   enableForms
 };
-
