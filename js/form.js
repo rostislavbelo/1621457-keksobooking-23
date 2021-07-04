@@ -2,7 +2,7 @@ import {
   HeaderLength,
   PriceValue,
   validateHeader
-  //validatePrice - пока не используется.
+  //validatePrice - пока не используется, осталось от старого варианта.
 }
   from './validate.js';
 
@@ -18,19 +18,19 @@ const TIME_OUT = FORM.querySelector('#timeout');
 
 
 const prepareHeader = () => {
-  HEADER.setAttribute('reqired', true);
+  HEADER.setAttribute('reqired', '');
   HEADER.setAttribute('minlength', HeaderLength.MIN);
   HEADER.setAttribute('maxlength', HeaderLength.MAX);
 };
 
 const preparePrice = () => {
-  PRICE.setAttribute('reqired', true);
+  PRICE.setAttribute('reqired', '');
   PRICE.setAttribute('min', PriceValue.MIN);
   PRICE.setAttribute('max', PriceValue.MAX);
 };
 
 const prepareAddress = () => {
-  ADDRESS.setAttribute('reqired', true);
+  ADDRESS.setAttribute('reqired', '');
   ADDRESS.setAttribute('placeholder', 'Введите адрес');
 };
 

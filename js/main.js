@@ -15,12 +15,12 @@ import {
   addValidators
 } from './form.js';
 
-//disableForms();
+disableForms();
 
 const ads = getAds();
 
 renderCard(ads[0]);
 
-//setTimeout(enableForms, 3000);
+setTimeout(enableForms, 3000);
 
 addValidators();
