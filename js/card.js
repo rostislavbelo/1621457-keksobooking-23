@@ -13,8 +13,8 @@ import {
 } from './dom-utils.js';
 
 const CARD_TEMPLATE = document.querySelector('#card');
-const MAP_ELEMENT = document.querySelector('.map');
-const MAP_CANVAS_ELEMENT = MAP_ELEMENT.querySelector('#map-canvas');
+//const MAP_ELEMENT = document.querySelector('.map'); стал не нужен
+//const MAP_CANVAS_ELEMENT = MAP_ELEMENT.querySelector('#map-canvas'); стал не нужен
 
 const renderCard = (ad) => {
   const { offer, author } = ad;
@@ -54,7 +54,7 @@ const renderCard = (ad) => {
 
   photosContainer.appendChild(renderPhotos(photoElement, offer.photos));
 
-  MAP_CANVAS_ELEMENT.appendChild(card);
+  //MAP_CANVAS_ELEMENT.appendChild(card); стал не нужен
 };
 
 export { renderCard };

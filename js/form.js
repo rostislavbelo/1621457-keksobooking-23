@@ -6,31 +6,31 @@ import {
 }
   from './validate.js';
 
-const FORM = document.querySelector('.ad-form');
-const HEADER = FORM.querySelector('#title');
-const ADDRESS = FORM.querySelector('#address');
-const PRICE = FORM.querySelector('#price');
-const ROOM_NUMBER = FORM.querySelector('#room_number');
-const CAPACITY = FORM.querySelector('#capacity');
-const TYPE = FORM.querySelector('#type');
-const TIME_IN = FORM.querySelector('#timein');
-const TIME_OUT = FORM.querySelector('#timeout');
-
+import {
+  HEADER,
+  ADDRESS,
+  PRICE,
+  ROOM_NUMBER,
+  CAPACITY,
+  TYPE,
+  TIME_IN,
+  TIME_OUT
+} from './constants.js';
 
 const prepareHeader = () => {
-  HEADER.setAttribute('reqired', '');
+  HEADER.setAttribute('required', true);
   HEADER.setAttribute('minlength', HeaderLength.MIN);
   HEADER.setAttribute('maxlength', HeaderLength.MAX);
 };
 
 const preparePrice = () => {
-  PRICE.setAttribute('reqired', '');
+  PRICE.setAttribute('required', true);
   PRICE.setAttribute('min', PriceValue.MIN);
   PRICE.setAttribute('max', PriceValue.MAX);
 };
 
 const prepareAddress = () => {
-  ADDRESS.setAttribute('reqired', '');
+  ADDRESS.setAttribute('required', true);
   ADDRESS.setAttribute('placeholder', 'Введите адрес');
 };
 

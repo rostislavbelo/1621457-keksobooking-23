@@ -1,3 +1,13 @@
+const FORM = document.querySelector('.ad-form');
+const HEADER = FORM.querySelector('#title');
+const ADDRESS = FORM.querySelector('#address');
+const PRICE = FORM.querySelector('#price');
+const ROOM_NUMBER = FORM.querySelector('#room_number');
+const CAPACITY = FORM.querySelector('#capacity');
+const TYPE = FORM.querySelector('#type');
+const TIME_IN = FORM.querySelector('#timein');
+const TIME_OUT = FORM.querySelector('#timeout');
+
 const NUMBER_MIN = 1;
 const MIN_INDEX = 0;
 const STRING_INDEX = 2;
@@ -80,5 +90,14 @@ export {
   Location,
   AD_TYPES,
   GUESTS,
-  ROOMS
+  ROOMS,
+  FORM,
+  HEADER,
+  ADDRESS,
+  PRICE,
+  ROOM_NUMBER,
+  CAPACITY,
+  TYPE,
+  TIME_IN,
+  TIME_OUT
 };

@@ -15,12 +15,21 @@ import {
   addValidators
 } from './form.js';
 
+import {
+  pinMainMarker,
+  showMap,
+  addAddress,
+  addPins
+} from './map.js';
+
+
 disableForms();
 
-const ads = getAds();
+showMap(enableForms());
 
-renderCard(ads[0]);
+addAddress(pinMainMarker);
 
-setTimeout(enableForms, 3000);
+addPins(getAds(), renderCard);
 
 addValidators();
+
