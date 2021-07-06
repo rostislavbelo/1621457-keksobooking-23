@@ -16,7 +16,7 @@ import {
 } from './form.js';
 
 import {
-  pinMainMarker,
+  PIN_MAIN_MARKER,
   showMap,
   addAddress,
   addPins
@@ -25,11 +25,10 @@ import {
 
 disableForms();
 
-showMap(enableForms());
-
-addAddress(pinMainMarker);
-
-addPins(getAds(), renderCard);
-
 addValidators();
 
+showMap(enableForms());
+
+addAddress(PIN_MAIN_MARKER);
+
+addPins(getAds(), renderCard);
