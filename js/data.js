@@ -56,14 +56,13 @@ const getAds = () => {
   const ads = [];
 
   for (let index = 0; index < AVATAR_NUMBERS; index++) {
-    ads.push(getAd());
+    ads.push(getAd(index + 1));
   }
 
   return ads;
 };
 
 export {
-  getAd,
   getAds
 };
 

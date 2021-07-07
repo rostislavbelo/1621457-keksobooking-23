@@ -6,55 +6,58 @@ import {
   GUESTS,
   ROOMS
 } from './constants.js';
-import {
-  removeExtraFeatures,
-  renderPhotos,
-  setOrRemove
-} from './dom-utils.js';
 
-const CARD_TEMPLATE = document.querySelector('#card');
-const MAP_ELEMENT = document.querySelector('.map');
-const MAP_CANVAS_ELEMENT = MAP_ELEMENT.querySelector('#map-canvas');
+const removeElement = (elements, elementClasses) => {
+  elements.forEach((element) => {
+    const elementClass = element.classList[1];
+    if (!elementClasses.includes(elementClass)) {
+      element.remove();
+    }
+  });
+};
+
+const fillOrDeletePhoto = (photos, block, element) => {
+  if (!photos || photos.length === 0) {
+    element.remove();
+  } else {
+    photos.forEach((photo) => {
+      const clonePhoto = element.cloneNode(true);
+      clonePhoto.src = photo;
+      block.appendChild(clonePhoto);
+    });
+    element.remove();
+  }
+};
+
+const SIMILAR_CARD_TEMPLATE = document.querySelector('#card')
+  .content
+  .querySelector('.popup');
 
 const renderCard = (ad) => {
-  const { offer, author } = ad;
+  const offer = ad.offer;
+  const author = ad.author;
+  const cardElement = SIMILAR_CARD_TEMPLATE.cloneNode(true);
 
-  const card = CARD_TEMPLATE.content.cloneNode(true);
-  const title = card.querySelector('.popup__title');
-  const address = card.querySelector('.popup__text--address');
-  const price = card.querySelector('.popup__text--price');
-  const type = card.querySelector('.popup__type');
-  const capacity = card.querySelector('.popup__text--capacity');
-  const time = card.querySelector('.popup__text--time');
-  const description = card.querySelector('.popup__description');
-  const avatar = card.querySelector('.popup__avatar');
-  const featuresContainer = card.querySelector('.popup__features');
-  const features = featuresContainer.querySelectorAll('.popup__feature');
-  const photosContainer = card.querySelector('.popup__photos');
-  const photoElement = photosContainer.querySelector('.popup__photo');
+  cardElement.querySelector('.popup__text--address').textContent = offer.address;
+  cardElement.querySelector('.popup__avatar').src = author.avatar;
+  cardElement.querySelector('.popup__type').textContent = AD_TYPES[offer.type];
+  cardElement.querySelector('.popup__title').textContent = offer.title;
+  cardElement.querySelector('.popup__text--price').textContent = `${offer.price} ₽/ночь`;
+  cardElement.querySelector('.popup__text--capacity').textContent = `${getPlural(offer.rooms, ROOMS)} для ${getPlural(offer.guests, GUESTS)}`;
+  cardElement.querySelector('.popup__description').textContent = offer.description;
+  cardElement.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin} выезд до ${offer.checkout}`;
+  const offerFeatureClasses = offer.features && offer.features.map((features) => `popup__feature--${features}`) || [];
+  const featureElementList = cardElement.querySelectorAll('.popup__feature');
+  const PHOTOS = cardElement.querySelector('.popup__photos');
+  const PHOTO = PHOTOS.querySelector('.popup__photo');
 
-  const capacityText = `${getPlural(offer.rooms, ROOMS)} для ${getPlural(offer.guests, GUESTS)}`;
-  const timeText = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
+  removeElement(featureElementList, offerFeatureClasses);
 
-  setOrRemove(title, offer.title);
-  setOrRemove(address, offer.address);
-  setOrRemove(price, offer.price, `${offer.price} Р/ночь`);
-  setOrRemove(type, offer.type, `${AD_TYPES[offer.type] ? AD_TYPES[offer.type] : ''}`);
-  setOrRemove(capacity, offer.rooms * offer.guests, capacityText);
-  setOrRemove(time, offer.checkin.length * offer.checkout.length, timeText);
-  setOrRemove(description, offer.description);
+  fillOrDeletePhoto(offer.photos, PHOTOS, PHOTO);
 
-  if (!author.avatar) {
-    avatar.remove();
-  } else {
-    avatar.src = author.avatar;
-  }
-
-  removeExtraFeatures(features, offer.features);
-
-  photosContainer.appendChild(renderPhotos(photoElement, offer.photos));
-
-  MAP_CANVAS_ELEMENT.appendChild(card);
+  return cardElement;
 };
 
 export { renderCard };
+
+
