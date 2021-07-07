@@ -39,13 +39,13 @@ const addAddress = (markerName) => {
   ADDRESS.value = `${(pinPositions.lat).toFixed(5)}, ${(pinPositions.lng).toFixed(5)}`;
 };
 
-const map = L.map('map-canvas');
+const MAP = L.map('map-canvas');
 
 const showMap = (active) => {
-  map.on('load', () => {
+  MAP.on('load', () => {
     active;
   });
-  map.setView({
+  MAP.setView({
     lat: START_POSITION.LAT,
     lng: START_POSITION.LNG,
   }, 10);
@@ -55,9 +55,9 @@ const showMap = (active) => {
     {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     },
-  ).addTo(map);
+  ).addTo(MAP);
 
-  PIN_MAIN_MARKER.addTo(map);
+  PIN_MAIN_MARKER.addTo(MAP);
 
   PIN_MAIN_MARKER.on('moveend', (evt) => {
     addAddress(evt.target);
@@ -78,7 +78,7 @@ const addPins = (points, card) => {
         PIN,
       });
 
-    marker.addTo(map);
+    marker.addTo(MAP);
     marker.bindPopup(card(point),
       {
         keepInView: true,
@@ -94,7 +94,7 @@ BUTTON_RESET.addEventListener('click', () => {
     lng: START_POSITION.LNG,
   });
 
-  map.setView({
+  MAP.setView({
     lat: START_POSITION.LAT,
     lng: START_POSITION.LNG,
   }, 10);

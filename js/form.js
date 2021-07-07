@@ -14,7 +14,8 @@ import {
   CAPACITY,
   TYPE,
   TIME_IN,
-  TIME_OUT
+  TIME_OUT,
+  AD_TYPES
 } from './constants.js';
 
 const prepareHeader = () => {
@@ -30,7 +31,7 @@ const preparePrice = () => {
 };
 
 const prepareAddress = () => {
-  ADDRESS.setAttribute('required', true);
+  ADDRESS.setAttribute('readonly', true);
   ADDRESS.setAttribute('placeholder', 'Введите адрес');
 };
 
@@ -46,14 +47,6 @@ const LIMIT_MIN_PRICE = {
   hotel: 3000,
   house: 5000,
   palace: 10000,
-};
-
-const TYPE_TEXT = {
-  bungalow: 'Бунгало',
-  flat: 'Квартира',
-  hotel: 'Отель',
-  house: 'Дом',
-  palace: 'Дворец',
 };
 
 const handLimitPrice = () => {
@@ -79,7 +72,7 @@ const handlePriceChange = (evt) => {
   const value = element.value;
 
   if (value < LIMIT_MIN_PRICE[TYPE.value] || value > PriceValue.MAX) {
-    element.setCustomValidity(`${TYPE_TEXT[TYPE.value]} от ${LIMIT_MIN_PRICE[TYPE.value]}, до ${PriceValue.MAX} за ночь`);
+    element.setCustomValidity(`${AD_TYPES[TYPE.value]} от ${LIMIT_MIN_PRICE[TYPE.value]}, до ${PriceValue.MAX} за ночь`);
   } else {
     element.setCustomValidity('');
   }
