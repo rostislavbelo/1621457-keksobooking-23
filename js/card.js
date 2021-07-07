@@ -34,7 +34,8 @@ const SIMILAR_CARD_TEMPLATE = document.querySelector('#card')
   .querySelector('.popup');
 
 const renderCard = (ad) => {
-  const { offer, author } = ad;
+  const offer = ad.offer;
+  const author = ad.author;
   const cardElement = SIMILAR_CARD_TEMPLATE.cloneNode(true);
 
   cardElement.querySelector('.popup__text--address').textContent = offer.address;
@@ -42,10 +43,7 @@ const renderCard = (ad) => {
   cardElement.querySelector('.popup__type').textContent = AD_TYPES[offer.type];
   cardElement.querySelector('.popup__title').textContent = offer.title;
   cardElement.querySelector('.popup__text--price').textContent = `${offer.price} ₽/ночь`;
-
-  cardElement.querySelector('.popup__text--capacity').textContent = `${offer.rooms}
-  ${getPlural(offer.rooms, ROOMS)} для ${offer.guests} ${getPlural(offer.guests, GUESTS)}`;
-
+  cardElement.querySelector('.popup__text--capacity').textContent = `${getPlural(offer.rooms, ROOMS)} для ${getPlural(offer.guests, GUESTS)}`;
   cardElement.querySelector('.popup__description').textContent = offer.description;
   cardElement.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin} выезд до ${offer.checkout}`;
   const offerFeatureClasses = offer.features && offer.features.map((features) => `popup__feature--${features}`) || [];
