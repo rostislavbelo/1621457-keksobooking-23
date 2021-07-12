@@ -1,5 +1,6 @@
 const FORM = document.querySelector('.ad-form');
 const HEADER = FORM.querySelector('#title');
+const DESCRIPTION = FORM.querySelector('#description');
 const ADDRESS = FORM.querySelector('#address');
 const PRICE = FORM.querySelector('#price');
 const ROOM_NUMBER = FORM.querySelector('#room_number');
@@ -19,6 +20,9 @@ const AVATAR_NUMBERS = 10;
 const PHOTOS_ROOT = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking';
 const GUESTS = ['гостя', 'гостей', 'гостей'];
 const ROOMS = ['комната', 'комнаты', 'комнат'];
+const DATA_URL = 'https://23.javascript.pages.academy/keksobooking/data';
+const SAVE_URL = 'https://23.javascript.pages.academy/keksobooking';
+
 const TITLES = [
   'Сдается в аренду крутое жильё',
   'Проживание со всеми удобствами',
@@ -77,6 +81,7 @@ export {
   NUMBER_MIN,
   STRING_INDEX,
   ROOM_MAX,
+  DESCRIPTION,
   GUESTS_MAX,
   AVATAR_NUMBERS,
   PRICE_MAX,
@@ -99,5 +104,7 @@ export {
   CAPACITY,
   TYPE,
   TIME_IN,
-  TIME_OUT
+  TIME_OUT,
+  DATA_URL,
+  SAVE_URL
 };

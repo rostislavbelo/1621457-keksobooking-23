@@ -1,11 +1,5 @@
-import {
-  getPlural
-} from './utils.js';
-import {
-  AD_TYPES,
-  GUESTS,
-  ROOMS
-} from './constants.js';
+import { getPlural } from './utils.js';
+import { AD_TYPES, GUESTS, ROOMS } from './constants.js';
 
 const removeElement = (elements, elementClasses) => {
   elements.forEach((element) => {
@@ -29,14 +23,13 @@ const fillOrDeletePhoto = (photos, block, element) => {
   }
 };
 
-const SIMILAR_CARD_TEMPLATE = document.querySelector('#card')
-  .content
-  .querySelector('.popup');
+const CARD_TEMPLATE = document.querySelector('#card');
+const CARD_TEMPLATE_ELEMENT = CARD_TEMPLATE.content.querySelector('.popup');
 
 const renderCard = (ad) => {
   const offer = ad.offer;
   const author = ad.author;
-  const cardElement = SIMILAR_CARD_TEMPLATE.cloneNode(true);
+  const cardElement = CARD_TEMPLATE_ELEMENT.cloneNode(true);
 
   cardElement.querySelector('.popup__text--address').textContent = offer.address;
   cardElement.querySelector('.popup__avatar').src = author.avatar;
@@ -46,10 +39,13 @@ const renderCard = (ad) => {
   cardElement.querySelector('.popup__text--capacity').textContent = `${getPlural(offer.rooms, ROOMS)} для ${getPlural(offer.guests, GUESTS)}`;
   cardElement.querySelector('.popup__description').textContent = offer.description;
   cardElement.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin} выезд до ${offer.checkout}`;
-  const offerFeatureClasses = offer.features && offer.features.map((features) => `popup__feature--${features}`) || [];
   const featureElementList = cardElement.querySelectorAll('.popup__feature');
   const PHOTOS = cardElement.querySelector('.popup__photos');
   const PHOTO = PHOTOS.querySelector('.popup__photo');
+
+  const getClassfeature = (features) => `popup__feature--${features}`;
+
+  const offerFeatureClasses = offer.features && offer.features.map(getClassfeature) || [];
 
   removeElement(featureElementList, offerFeatureClasses);
 

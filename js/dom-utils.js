@@ -14,7 +14,18 @@ const FORMS = [
   },
 ];
 
-const removeExtraFeatures = (elements, features) => {
+const BODY = document.querySelector('body');
+const SUCCESS = BODY.querySelector('#success')
+  .content
+  .querySelector('.success');
+const ERROR = BODY.querySelector('#error')
+  .content
+  .querySelector('.error');
+const LOAD_ERROR = BODY.querySelector('#load-error').content;
+const ERROR_BUTTON = BODY.querySelector('.error__button');
+
+
+/* const removeExtraFeatures = (elements, features) => {
   elements.forEach((element) => {
     const classes = element.classList[1].split('--');
 
@@ -47,7 +58,7 @@ const setOrRemove = (element, value, text) => {
   }
 
   element.textContent = text ? text : value;
-};
+}; */
 
 const switchForm = (form, className, selector, enable) => {
   if (enable) {
@@ -75,11 +86,63 @@ const switchForms = (enable) => {
 
 const disableForms = () => switchForms(false);
 const enableForms = () => switchForms(true);
+//========================================================================
+
+const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
+
+const onError = () => {
+  const cloneError = LOAD_ERROR.cloneNode(true);
+  BODY.append(cloneError);
+};
+
+const successElement = SUCCESS.cloneNode(true);
+
+const removeSuccess = () => {
+  successElement.remove();
+  document.removeEventListener('click', removeSuccess);
+};
+
+const removeElementEsc = () => {
+  if (isEscEvent) {
+    removeSuccess();
+    document.removeEventListener('keydown', removeElementEsc);
+  }
+};
+
+const messageSuccess = () => {
+  BODY.append(successElement);
+  document.addEventListener('keydown', removeElementEsc);
+  document.addEventListener('click', removeSuccess);
+};
+
+const errorElement = ERROR.cloneNode(true);
+
+const removeError = () => {
+  errorElement.remove();
+  document.removeEventListener('click', removeError);
+};
+
+const removeErrorEsc = () => {
+  if (isEscEvent) {
+    removeError();
+    document.removeEventListener('keydown', removeErrorEsc);
+  }
+};
+
+const messageError = () => {
+  BODY.append(errorElement);
+  document.addEventListener('keydown', removeErrorEsc);
+  document.addEventListener('click', removeError);
+  ERROR_BUTTON.addEventListener('click', removeError);
+};
 
 export {
-  removeExtraFeatures,
-  renderPhotos,
-  setOrRemove,
+  //removeExtraFeatures,
+  //renderPhotos,
+  //setOrRemove,
   disableForms,
-  enableForms
+  enableForms,
+  onError,
+  messageSuccess,
+  messageError
 };

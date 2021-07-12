@@ -1007,6 +1007,20 @@ fieldset {
   opacity: 0.6;
 }
 
+.load-error{
+  position: absolute;
+  background: rgb(141, 2, 2);
+  top: 20px;
+  left: 50%;
+  transform: translateX(50%);
+}
+
+.load-error__messege{
+  margin: 10px;
+  color: #f3ef0b;
+  text-align: center;
+}
+
 .visually-hidden {
   position: absolute;
 
