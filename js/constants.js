@@ -19,6 +19,9 @@ const AVATAR_NUMBERS = 10;
 const PHOTOS_ROOT = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking';
 const GUESTS = ['гостя', 'гостей', 'гостей'];
 const ROOMS = ['комната', 'комнаты', 'комнат'];
+const DATA_URL = 'https://23.javascript.pages.academy/keksobooking/data';
+const SAVE_URL = 'https://23.javascript.pages.academy/keksobooking';
+
 const TITLES = [
   'Сдается в аренду крутое жильё',
   'Проживание со всеми удобствами',
@@ -99,5 +102,7 @@ export {
   CAPACITY,
   TYPE,
   TIME_IN,
-  TIME_OUT
+  TIME_OUT,
+  DATA_URL,
+  SAVE_URL
 };

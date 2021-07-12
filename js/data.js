@@ -1,27 +1,9 @@
 import {
-  NUMBER_MIN,
-  TIMES,
-  TITLES,
-  LIMIT_SINGS,
-  MIN_INDEX,
-  TYPES,
-  PRICE_MAX,
-  ROOM_MAX,
-  GUESTS_MAX,
-  FEATURES,
-  DESCRIPTIONS,
-  PHOTOS,
-  AVATAR_NUMBERS,
-  Location
+  NUMBER_MIN, TIMES, TITLES, LIMIT_SINGS, MIN_INDEX, TYPES, PRICE_MAX, ROOM_MAX,
+  GUESTS_MAX, FEATURES, DESCRIPTIONS, PHOTOS, AVATAR_NUMBERS, Location
 } from './constants.js';
 
-import {
-  getRandomFraction,
-  getRandomInteger,
-  getRandomArrayElement,
-  createArrayRandom,
-  getUrlAvatar
-} from './utils.js';
+import { getRandomFraction, getRandomInteger, getRandomArrayElement, createArrayRandom, getUrlAvatar } from './utils.js';
 
 const getAd = () => {
   const lat = getRandomFraction(Location.LAT_MIN, Location.LAT_MAX, LIMIT_SINGS);

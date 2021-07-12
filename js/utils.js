@@ -1,7 +1,4 @@
-import {
-  STRING_INDEX,
-  MIN_INDEX
-} from './constants.js';
+import { STRING_INDEX, MIN_INDEX } from './constants.js';
 
 const isNumber = (value) => typeof value === 'number' && !Number.isNaN(value) && value >= 0;
 

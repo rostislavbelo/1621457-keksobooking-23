@@ -1,22 +1,10 @@
-import {
-  HeaderLength,
-  PriceValue,
-  validateHeader
-  //validatePrice - пока не используется, осталось от старого варианта.
-}
-  from './validate.js';
+import { HeaderLength, PriceValue, validateHeader } from './validate.js';
+import { HEADER, ADDRESS, PRICE, ROOM_NUMBER, CAPACITY, TYPE, TIME_IN, TIME_OUT, AD_TYPES, FORM, SAVE_URL } from './constants.js';
+import { sendData } from './api.js';
+import { messageSuccess, messageError } from './dom-utils.js';
+import { setInitialStateMap } from './map.js';
 
-import {
-  HEADER,
-  ADDRESS,
-  PRICE,
-  ROOM_NUMBER,
-  CAPACITY,
-  TYPE,
-  TIME_IN,
-  TIME_OUT,
-  AD_TYPES
-} from './constants.js';
+const BUTTON_RESET = FORM.querySelector('.ad-form__reset');
 
 const prepareHeader = () => {
   HEADER.setAttribute('required', true);
@@ -41,7 +29,7 @@ const prepareForm = () => {
   prepareAddress();
 };
 
-const LIMIT_MIN_PRICE = {
+const LimitMinPrice = {
   bungalow: 0,
   flat: 1000,
   hotel: 3000,
@@ -50,8 +38,8 @@ const LIMIT_MIN_PRICE = {
 };
 
 const handLimitPrice = () => {
-  PRICE.placeholder = LIMIT_MIN_PRICE[TYPE.value];
-  PRICE.min = LIMIT_MIN_PRICE[TYPE.value];
+  PRICE.placeholder = LimitMinPrice[TYPE.value];
+  PRICE.min = LimitMinPrice[TYPE.value];
 };
 
 const handleHeaderChange = (evt) => {
@@ -71,8 +59,8 @@ const handlePriceChange = (evt) => {
   const element = evt.target;
   const value = element.value;
 
-  if (value < LIMIT_MIN_PRICE[TYPE.value] || value > PriceValue.MAX) {
-    element.setCustomValidity(`${AD_TYPES[TYPE.value]} от ${LIMIT_MIN_PRICE[TYPE.value]}, до ${PriceValue.MAX} за ночь`);
+  if (value < LimitMinPrice[TYPE.value] || value > PriceValue.MAX) {
+    element.setCustomValidity(`${AD_TYPES[TYPE.value]} от ${LimitMinPrice[TYPE.value]}, до ${PriceValue.MAX} за ночь`);
   } else {
     element.setCustomValidity('');
   }
@@ -108,6 +96,26 @@ const compensationTimeout = () => {
   TIME_IN.value = TIME_OUT.value;
 };
 
+const onSubmitSuccess = () => {
+  messageSuccess();
+};
+
+const onSubmitError = () => {
+  messageError();
+};
+
+const onSubmit = (evt) => {
+  const formData = new FormData(evt.target);
+
+  evt.preventDefault();
+  sendData(SAVE_URL, formData, onSubmitSuccess, onSubmitError);
+};
+
+BUTTON_RESET.addEventListener('click', () => {
+  setInitialStateMap();
+});
+
+
 const addValidators = () => {
   HEADER.addEventListener('input', handleHeaderChange);
   PRICE.addEventListener('input', handlePriceChange);
@@ -117,6 +125,7 @@ const addValidators = () => {
   TYPE.addEventListener('change', handLimitPrice);
   TIME_IN.addEventListener('change', compensationTimein);
   TIME_OUT.addEventListener('change', compensationTimeout);
+  FORM.addEventListener('submit', onSubmit);
 };
 
 prepareForm();
