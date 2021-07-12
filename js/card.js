@@ -43,7 +43,9 @@ const renderCard = (ad) => {
   const PHOTOS = cardElement.querySelector('.popup__photos');
   const PHOTO = PHOTOS.querySelector('.popup__photo');
 
-  const offerFeatureClasses = offer.features && offer.features.map((features) => `popup__feature--${features}`) || [];
+  const getClassfeature = (features) => `popup__feature--${features}`;
+
+  const offerFeatureClasses = offer.features && offer.features.map(getClassfeature) || [];
 
   removeElement(featureElementList, offerFeatureClasses);
 

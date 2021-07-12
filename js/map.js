@@ -8,26 +8,26 @@ const StartPosition = {
 const START_MAP_SKALE = 12;
 const ADDRESS = FORM.querySelector('#address');
 
-const PinImg = L.icon({
-  iconUrl: '../img/main-pin.svg',
+const PIN_IMG = L.icon({
+  iconUrl: 'img/main-pin.svg',
   iconSize: [52, 52],
   iconAnchor: [26, 52],
 });
 
-const Pin = L.icon({
-  iconUrl: '../img/pin.svg',
+const PIN = L.icon({
+  iconUrl: 'img/pin.svg',
   iconSize: [40, 40],
   iconAnchor: [20, 40],
 });
 
-const PinMainMarker = L.marker(
+const PIN_MAIN_MARKER = L.marker(
   {
     lat: StartPosition.LAT,
     lng: StartPosition.LNG,
   },
   {
     draggable: true,
-    icon: PinImg,
+    icon: PIN_IMG,
   },
 );
 
@@ -53,9 +53,9 @@ const showMap = (onLoadSuccess) => {
     },
   ).addTo(MAP);
 
-  PinMainMarker.addTo(MAP);
+  PIN_MAIN_MARKER.addTo(MAP);
 
-  PinMainMarker.on('moveend', (evt) => {
+  PIN_MAIN_MARKER.on('moveend', (evt) => {
     addAddress(evt.target);
   });
 };
@@ -68,7 +68,7 @@ const addPins = (points, card) => {
         lng: point.location.lng,
       },
       {
-        Pin,
+        PIN,
       });
 
     Marker.addTo(MAP);
@@ -80,12 +80,16 @@ const addPins = (points, card) => {
   });
 };
 
+const resetAddress = () => {
+  ADDRESS.value = `${StartPosition.LAT}, ${StartPosition.LNG}`;
+};
+
 const setInitialStateMap = () => {
   const balun = document.querySelector('.leaflet-popup');
   const lat = StartPosition.LAT;
   const lng = StartPosition.LNG;
 
-  PinMainMarker.setLatLng({
+  PIN_MAIN_MARKER.setLatLng({
     lat,
     lng,
   });
@@ -98,10 +102,11 @@ const setInitialStateMap = () => {
   if (balun) {
     balun.remove();
   }
+  resetAddress();
 };
 
 export {
-  PinMainMarker,
+  PIN_MAIN_MARKER,
   showMap,
   addAddress,
   addPins,

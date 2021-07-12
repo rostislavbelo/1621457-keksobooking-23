@@ -1,5 +1,6 @@
 const FORM = document.querySelector('.ad-form');
 const HEADER = FORM.querySelector('#title');
+const DESCRIPTION = FORM.querySelector('#description');
 const ADDRESS = FORM.querySelector('#address');
 const PRICE = FORM.querySelector('#price');
 const ROOM_NUMBER = FORM.querySelector('#room_number');
@@ -80,6 +81,7 @@ export {
   NUMBER_MIN,
   STRING_INDEX,
   ROOM_MAX,
+  DESCRIPTION,
   GUESTS_MAX,
   AVATAR_NUMBERS,
   PRICE_MAX,

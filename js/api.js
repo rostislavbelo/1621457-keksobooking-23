@@ -8,7 +8,9 @@ const loadData = (url, onSuccess, onError) => {
     return response.json();
   }).then((json) => {
     onSuccess(json);
-  }).catch(() => onError());
+  }).catch((error) => {
+    onError(error);
+  });
 };
 
 const sendData = (url, body, onSuccess, onError) => {

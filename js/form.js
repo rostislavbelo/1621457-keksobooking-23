@@ -1,10 +1,8 @@
 import { HeaderLength, PriceValue, validateHeader } from './validate.js';
-import { HEADER, ADDRESS, PRICE, ROOM_NUMBER, CAPACITY, TYPE, TIME_IN, TIME_OUT, AD_TYPES, FORM, SAVE_URL } from './constants.js';
+import { HEADER, DESCRIPTION, ADDRESS, PRICE, ROOM_NUMBER, CAPACITY, TYPE, TIME_IN, TIME_OUT, AD_TYPES, FORM, SAVE_URL } from './constants.js';
 import { sendData } from './api.js';
 import { messageSuccess, messageError } from './dom-utils.js';
 import { setInitialStateMap } from './map.js';
-
-const BUTTON_RESET = FORM.querySelector('.ad-form__reset');
 
 const prepareHeader = () => {
   HEADER.setAttribute('required', true);
@@ -96,8 +94,26 @@ const compensationTimeout = () => {
   TIME_IN.value = TIME_OUT.value;
 };
 
+const getStartValues = () => {
+  setInitialStateMap();
+  HEADER.value = '';
+  DESCRIPTION.value = '';
+  PRICE.value = '';
+  ROOM_NUMBER.value = '1';
+  TYPE.value = 'flat';
+  CAPACITY.value = '1';
+  TIME_IN.value = '12:00';
+  TIME_OUT.value = '12:00';
+};
+
+const resetForms = (evt) => {
+  evt.preventDefault();
+  getStartValues();
+};
+
 const onSubmitSuccess = () => {
   messageSuccess();
+  getStartValues();
 };
 
 const onSubmitError = () => {
@@ -111,10 +127,7 @@ const onSubmit = (evt) => {
   sendData(SAVE_URL, formData, onSubmitSuccess, onSubmitError);
 };
 
-BUTTON_RESET.addEventListener('click', () => {
-  setInitialStateMap();
-});
-
+FORM.addEventListener('reset', resetForms);
 
 const addValidators = () => {
   HEADER.addEventListener('input', handleHeaderChange);
