@@ -22,3 +22,5 @@ const onMapSuccess = () => {
 };
 
 showMap(onMapSuccess);
+
+export {onMapSuccess};

@@ -1,7 +1,7 @@
 import { HeaderLength, PriceValue, validateHeader } from './validate.js';
 import { TYPE_HOUSING, PRICE_HOUSING, ROOMS_HOUSING, GUESTS_HOUSING, FEATURES_HOUSING, MAP_FILTERS, HEADER, DESCRIPTION, ADDRESS, PRICE, ROOM_NUMBER, CAPACITY, TYPE, TIME_IN, TIME_OUT, AD_TYPES, FORM, SAVE_URL, CHECKBOX_FORM } from './constants.js';
 import { sendData } from './api.js';
-import { messageSuccess, messageError } from './dom-utils.js';
+import { messageSuccess, messageError, enableForms } from './dom-utils.js';
 import { getData, prepareData } from './store.js';
 import { setInitialStateMap, addPins, removePins } from './map.js';
 import { renderCard } from './card.js';
@@ -116,10 +116,10 @@ const getStartValues = () => {
 
 const resetForms = (evt) => {
   evt.preventDefault();
+  removePins();
   getStartValues();
   setInitialStateMap();
   prepareData();
-  removePins();
   addPins(getData(), renderCard);
 };
 
