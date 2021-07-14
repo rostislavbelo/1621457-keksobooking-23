@@ -1,5 +1,7 @@
 import { FORM } from './constants.js';
 
+const markers = [];
+
 const StartPosition = {
   LAT: 35.68378,
   LNG: 139.75423,
@@ -77,6 +79,7 @@ const addPins = (points, card) => {
         keepInView: true,
       },
     );
+    markers.push(Marker);
   });
 };
 
@@ -105,10 +108,15 @@ const setInitialStateMap = () => {
   resetAddress();
 };
 
+const removePins = () => {
+  markers.forEach((marker) => MAP.removeLayer(marker));
+};
+
 export {
   PIN_MAIN_MARKER,
   showMap,
   addAddress,
   addPins,
-  setInitialStateMap
+  setInitialStateMap,
+  removePins
 };

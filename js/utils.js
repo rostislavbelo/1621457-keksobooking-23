@@ -51,11 +51,22 @@ const getPluralIdx = (count) => {
 const pluralize = (count, plurals) => plurals[getPluralIdx(count)];
 const getPlural = (count, plurals) => `${count} ${pluralize(count, plurals)}`;
 
+
+function debounce (callback, timeoutDelay) {
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
 export {
   getRandomFraction,
   getRandomInteger,
   getRandomArrayElement,
   createArrayRandom,
   getUrlAvatar,
-  getPlural
+  getPlural,
+  debounce
 };

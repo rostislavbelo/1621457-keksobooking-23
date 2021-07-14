@@ -1,8 +1,12 @@
 import { HeaderLength, PriceValue, validateHeader } from './validate.js';
-import { HEADER, DESCRIPTION, ADDRESS, PRICE, ROOM_NUMBER, CAPACITY, TYPE, TIME_IN, TIME_OUT, AD_TYPES, FORM, SAVE_URL } from './constants.js';
+import { TYPE_HOUSING, PRICE_HOUSING, ROOMS_HOUSING, GUESTS_HOUSING, FEATURES_HOUSING, MAP_FILTERS, HEADER, DESCRIPTION, ADDRESS, PRICE, ROOM_NUMBER, CAPACITY, TYPE, TIME_IN, TIME_OUT, AD_TYPES, FORM, SAVE_URL, CHECKBOX_FORM } from './constants.js';
 import { sendData } from './api.js';
 import { messageSuccess, messageError } from './dom-utils.js';
-import { setInitialStateMap } from './map.js';
+import { getData, prepareData } from './store.js';
+import { setInitialStateMap, addPins, removePins } from './map.js';
+import { renderCard } from './card.js';
+import { setFeatureValue, setSelectValue, filterAds } from './filters.js';
+import { debounce } from './utils.js';
 
 const prepareHeader = () => {
   HEADER.setAttribute('required', true);
@@ -27,7 +31,7 @@ const prepareForm = () => {
   prepareAddress();
 };
 
-const LimitMinPrice = {
+const LIMIT_MIN_PRICE = {
   bungalow: 0,
   flat: 1000,
   hotel: 3000,
@@ -36,8 +40,8 @@ const LimitMinPrice = {
 };
 
 const handLimitPrice = () => {
-  PRICE.placeholder = LimitMinPrice[TYPE.value];
-  PRICE.min = LimitMinPrice[TYPE.value];
+  PRICE.placeholder = LIMIT_MIN_PRICE[TYPE.value];
+  PRICE.min = LIMIT_MIN_PRICE[TYPE.value];
 };
 
 const handleHeaderChange = (evt) => {
@@ -57,8 +61,8 @@ const handlePriceChange = (evt) => {
   const element = evt.target;
   const value = element.value;
 
-  if (value < LimitMinPrice[TYPE.value] || value > PriceValue.MAX) {
-    element.setCustomValidity(`${AD_TYPES[TYPE.value]} от ${LimitMinPrice[TYPE.value]}, до ${PriceValue.MAX} за ночь`);
+  if (value < LIMIT_MIN_PRICE[TYPE.value] || value > PriceValue.MAX) {
+    element.setCustomValidity(`${AD_TYPES[TYPE.value]} от ${LIMIT_MIN_PRICE[TYPE.value]}, до ${PriceValue.MAX} за ночь`);
   } else {
     element.setCustomValidity('');
   }
@@ -95,7 +99,6 @@ const compensationTimeout = () => {
 };
 
 const getStartValues = () => {
-  setInitialStateMap();
   HEADER.value = '';
   DESCRIPTION.value = '';
   PRICE.value = '';
@@ -104,16 +107,24 @@ const getStartValues = () => {
   CAPACITY.value = '1';
   TIME_IN.value = '12:00';
   TIME_OUT.value = '12:00';
+  TYPE_HOUSING.value = 'any';
+  PRICE_HOUSING.value = 'any';
+  ROOMS_HOUSING.value = 'any';
+  GUESTS_HOUSING.value = 'any';
+  CHECKBOX_FORM.forEach((checkbox) => checkbox.checked = false);
 };
 
 const resetForms = (evt) => {
   evt.preventDefault();
   getStartValues();
+  setInitialStateMap();
+  prepareData();
+  removePins();
+  addPins(getData(), renderCard);
 };
 
 const onSubmitSuccess = () => {
   messageSuccess();
-  getStartValues();
 };
 
 const onSubmitError = () => {
@@ -127,7 +138,32 @@ const onSubmit = (evt) => {
   sendData(SAVE_URL, formData, onSubmitSuccess, onSubmitError);
 };
 
-FORM.addEventListener('reset', resetForms);
+const renderPins = () => {
+  prepareData(filterAds);
+  removePins();
+  addPins(getData(), renderCard);
+};
+
+const onFeatureChange = (evt) => {
+  const el = evt.target;
+  const name = el.value;
+  const value = el.checked;
+
+  setFeatureValue(name, value);
+  renderPins();
+};
+
+const onFilterChange = (evt) => {
+  const el = evt.target;
+  if (el.type === 'checkbox') {
+    return;
+  }
+  const name = el.name.split('-')[1];
+  const value = el.value;
+
+  setSelectValue(name, value);
+  renderPins();
+};
 
 const addValidators = () => {
   HEADER.addEventListener('input', handleHeaderChange);
@@ -139,8 +175,11 @@ const addValidators = () => {
   TIME_IN.addEventListener('change', compensationTimein);
   TIME_OUT.addEventListener('change', compensationTimeout);
   FORM.addEventListener('submit', onSubmit);
+  FORM.addEventListener('reset', resetForms);
+  MAP_FILTERS.addEventListener('change', debounce(onFilterChange, 500));
+  FEATURES_HOUSING.addEventListener('change', debounce(onFeatureChange, 500));
 };
 
 prepareForm();
 
-export { addValidators };
+export { addValidators, renderPins };
