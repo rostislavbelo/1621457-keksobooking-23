@@ -4,7 +4,7 @@ const isNumber = (value) => typeof value === 'number' && !Number.isNaN(value) &&
 
 const getRandomFraction = (min = 0, max = 0, dec = 0) => {
   if (!(isNumber(min) && isNumber(max) && isNumber(dec))) {
-    throw new Error('Все аргументы должны быть числами равными или болше нуля');
+    throw new Error('Возможное значение - от нуля и более');
   }
 
   const from = Math.min(min, max);

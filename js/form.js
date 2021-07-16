@@ -10,7 +10,7 @@ import { messageSuccess, messageError } from './dom-utils.js';
 import { getData, prepareData } from './store.js';
 import { setInitialStateMap, addPins, removePins } from './map.js';
 import { renderCard } from './card.js';
-import { setFeatureValue, setSelectValue, filterAd } from './filters.js';
+import { setFeatureValue, setSelectValue, filterAd, resetValues } from './filters.js';
 
 
 const prepareHeader = () => {
@@ -136,6 +136,7 @@ const renderPins = () => {
 const resetForms = (evt) => {
   evt.preventDefault();
   setInitialStateMap();
+  resetValues();
   prepareData();
   removePins();
   addPins(getData(), renderCard);

@@ -1,6 +1,6 @@
 import { PRICE_FILTER_MIN, PRICE_FILTER_MAX } from './constants.js';
 
-const features = {
+const DEFAULT_FEATURE_VALUES = {
   wifi: false,
   dishwasher: false,
   parking: false,
@@ -9,12 +9,15 @@ const features = {
   conditioner: false,
 };
 
-const selectValues = {
+const DEFAULT_SELECT_VALUES = {
   type: 'any',
   price: 'any',
   rooms: 'any',
   guests: 'any',
 };
+
+let features = { ...DEFAULT_FEATURE_VALUES };
+let selectValues = { ...DEFAULT_SELECT_VALUES };
 
 const priceValue = {
   min: 'low',
@@ -89,4 +92,9 @@ const filterAd = (ad) => {
   return true;
 };
 
-export { filterAd, setFeatureValue, setSelectValue };
+const resetValues = () => {
+  features = { ...DEFAULT_FEATURE_VALUES };
+  selectValues = { ...DEFAULT_SELECT_VALUES };
+};
+
+export { filterAd, setFeatureValue, setSelectValue, resetValues };
