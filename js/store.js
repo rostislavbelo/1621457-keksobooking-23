@@ -7,10 +7,12 @@ let preparedData = null;
 
 const getData = () => preparedData;
 
+const isFunction = (arg) => typeof arg === 'function';
+
 const prepareData = (filterFn) => {
   preparedData = [...initialData];
 
-  if (typeof (filterFn) === 'function') {
+  if (isFunction(filterFn)) {
     preparedData = preparedData.filter(filterFn);
   }
 

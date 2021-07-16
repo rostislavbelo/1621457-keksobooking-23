@@ -1,5 +1,5 @@
 import { getPlural } from './utils.js';
-import { AD_TYPES, GUESTS, ROOMS } from './constants.js';
+import { AD_TYPES, GUESTS, ROOMS, CARD_TEMPLATE_ELEMENT } from './constants.js';
 
 const removeElement = (elements, elementClasses) => {
   elements.forEach((element) => {
@@ -22,9 +22,6 @@ const fillOrDeletePhoto = (photos, block, element) => {
     element.remove();
   }
 };
-
-const CARD_TEMPLATE = document.querySelector('#card');
-const CARD_TEMPLATE_ELEMENT = CARD_TEMPLATE.content.querySelector('.popup');
 
 const renderCard = (ad) => {
   const offer = ad.offer;

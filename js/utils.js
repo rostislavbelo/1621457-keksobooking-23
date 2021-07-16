@@ -4,7 +4,7 @@ const isNumber = (value) => typeof value === 'number' && !Number.isNaN(value) &&
 
 const getRandomFraction = (min = 0, max = 0, dec = 0) => {
   if (!(isNumber(min) && isNumber(max) && isNumber(dec))) {
-    throw new Error('Все аргументы должны быть числами равными или болше нуля');
+    throw new Error('Возможное значение - от нуля и более');
   }
 
   const from = Math.min(min, max);
@@ -51,11 +51,22 @@ const getPluralIdx = (count) => {
 const pluralize = (count, plurals) => plurals[getPluralIdx(count)];
 const getPlural = (count, plurals) => `${count} ${pluralize(count, plurals)}`;
 
+
+function debounce (callback, timeoutDelay) {
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
 export {
   getRandomFraction,
   getRandomInteger,
   getRandomArrayElement,
   createArrayRandom,
   getUrlAvatar,
-  getPlural
+  getPlural,
+  debounce
 };

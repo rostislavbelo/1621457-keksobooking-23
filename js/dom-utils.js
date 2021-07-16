@@ -1,3 +1,5 @@
+import { BODY } from './constants.js';
+
 const AD_FORM = document.querySelector('.ad-form');
 const MAP_FILTRES = document.querySelector('.map__filters');
 
@@ -14,51 +16,16 @@ const FORMS = [
   },
 ];
 
-const BODY = document.querySelector('body');
 const SUCCESS = BODY.querySelector('#success')
   .content
   .querySelector('.success');
+
 const ERROR = BODY.querySelector('#error')
   .content
   .querySelector('.error');
+
 const LOAD_ERROR = BODY.querySelector('#load-error').content;
 const ERROR_BUTTON = BODY.querySelector('.error__button');
-
-
-/* const removeExtraFeatures = (elements, features) => {
-  elements.forEach((element) => {
-    const classes = element.classList[1].split('--');
-
-    if (!features.includes(classes[1])) {
-      element.remove();
-    }
-  });
-};
-
-const renderPhotos = (element, photos) => {
-  const fragment = document.createDocumentFragment();
-
-  photos.forEach((photoUrl) => {
-    const photoElement = element.cloneNode(true);
-
-    photoElement.src = photoUrl;
-    fragment.appendChild(photoElement);
-  });
-
-  element.remove();
-
-  return fragment;
-};
-
-const setOrRemove = (element, value, text) => {
-  if (!value) {
-    element.remove();
-
-    return;
-  }
-
-  element.textContent = text ? text : value;
-}; */
 
 const switchForm = (form, className, selector, enable) => {
   if (enable) {
@@ -86,7 +53,6 @@ const switchForms = (enable) => {
 
 const disableForms = () => switchForms(false);
 const enableForms = () => switchForms(true);
-//========================================================================
 
 const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
@@ -137,9 +103,6 @@ const messageError = () => {
 };
 
 export {
-  //removeExtraFeatures,
-  //renderPhotos,
-  //setOrRemove,
   disableForms,
   enableForms,
   onError,

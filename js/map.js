@@ -1,6 +1,8 @@
 import { FORM } from './constants.js';
 
-const StartPosition = {
+const markers = [];
+
+const START_POSITION = {
   LAT: 35.68378,
   LNG: 139.75423,
 };
@@ -22,8 +24,8 @@ const PIN = L.icon({
 
 const PIN_MAIN_MARKER = L.marker(
   {
-    lat: StartPosition.LAT,
-    lng: StartPosition.LNG,
+    lat: START_POSITION.LAT,
+    lng: START_POSITION.LNG,
   },
   {
     draggable: true,
@@ -42,8 +44,8 @@ const showMap = (onLoadSuccess) => {
   MAP.on('load', onLoadSuccess);
 
   MAP.setView({
-    lat: StartPosition.LAT,
-    lng: StartPosition.LNG,
+    lat: START_POSITION.LAT,
+    lng: START_POSITION.LNG,
   }, START_MAP_SKALE);
 
   L.tileLayer(
@@ -77,26 +79,25 @@ const addPins = (points, card) => {
         keepInView: true,
       },
     );
+    markers.push(Marker);
   });
 };
 
 const resetAddress = () => {
-  ADDRESS.value = `${StartPosition.LAT}, ${StartPosition.LNG}`;
+  ADDRESS.value = `${START_POSITION.LAT}, ${START_POSITION.LNG}`;
 };
 
 const setInitialStateMap = () => {
   const balun = document.querySelector('.leaflet-popup');
-  const lat = StartPosition.LAT;
-  const lng = StartPosition.LNG;
 
   PIN_MAIN_MARKER.setLatLng({
-    lat,
-    lng,
+    lat: START_POSITION.LAT,
+    lng: START_POSITION.LNG,
   });
 
   MAP.setView({
-    lat,
-    lng,
+    lat: START_POSITION.LAT,
+    lng:START_POSITION.LNG,
   }, START_MAP_SKALE);
 
   if (balun) {
@@ -105,10 +106,15 @@ const setInitialStateMap = () => {
   resetAddress();
 };
 
+const removePins = () => {
+  markers.forEach((marker) => MAP.removeLayer(marker));
+};
+
 export {
   PIN_MAIN_MARKER,
   showMap,
   addAddress,
   addPins,
-  setInitialStateMap
+  setInitialStateMap,
+  removePins
 };
