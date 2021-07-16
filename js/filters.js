@@ -92,9 +92,9 @@ const filterAd = (ad) => {
   return true;
 };
 
-const resetValues = () => {
+const resetValuesFiltersMap = () => {
   features = { ...DEFAULT_FEATURE_VALUES };
   selectValues = { ...DEFAULT_SELECT_VALUES };
 };
 
-export { filterAd, setFeatureValue, setSelectValue, resetValues };
+export { filterAd, setFeatureValue, setSelectValue, resetValuesFiltersMap };

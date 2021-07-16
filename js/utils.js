@@ -1,4 +1,4 @@
-import { STRING_INDEX, MIN_INDEX } from './constants.js';
+/* import { STRING_INDEX, MIN_INDEX } from './constants.js';
 
 const isNumber = (value) => typeof value === 'number' && !Number.isNaN(value) && value >= 0;
 
@@ -32,7 +32,7 @@ const createArrayRandom = (items) => {
   }
 
   return array;
-};
+}; */
 
 const getPluralIdx = (count) => {
   const c10 = count % 10;
@@ -62,11 +62,11 @@ function debounce (callback, timeoutDelay) {
 }
 
 export {
-  getRandomFraction,
-  getRandomInteger,
-  getRandomArrayElement,
-  createArrayRandom,
-  getUrlAvatar,
+  //getRandomFraction,
+  //getRandomInteger,
+  //getRandomArrayElement,
+  //createArrayRandom,
+  //getUrlAvatar,
   getPlural,
   debounce
 };
