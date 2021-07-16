@@ -96,8 +96,6 @@ const compensationTimeout = () => {
 };
 
 const getStartValues = () => {
-  CHECKBOX_FORM.forEach((checkbox) => checkbox.checked = false);
-
   HEADER.value = '';
   DESCRIPTION.value = '';
   PRICE.value = '';
@@ -110,6 +108,8 @@ const getStartValues = () => {
   PRICE_HOUSING.value = 'any';
   ROOMS_HOUSING.value = 'any';
   GUESTS_HOUSING.value = 'any';
+
+  CHECKBOX_FORM.forEach((checkbox) => checkbox.checked = false);
 };
 
 const onSubmitSuccess = () => {
