@@ -1,12 +1,17 @@
 import { HeaderLength, PriceValue, validateHeader } from './validate.js';
-import { TYPE_HOUSING, PRICE_HOUSING, ROOMS_HOUSING, GUESTS_HOUSING, FEATURES_HOUSING, MAP_FILTERS, HEADER, DESCRIPTION, ADDRESS, PRICE, ROOM_NUMBER, CAPACITY, TYPE, TIME_IN, TIME_OUT, AD_TYPES, FORM, SAVE_URL, CHECKBOX_FORM } from './constants.js';
+import {
+  LIMIT_MIN_PRICE, TYPE_HOUSING, PRICE_HOUSING, ROOMS_HOUSING, GUESTS_HOUSING,
+  FEATURES_HOUSING, MAP_FILTERS, HEADER, DESCRIPTION, ADDRESS, PRICE,
+  ROOM_NUMBER, CAPACITY, TYPE, TIME_IN, TIME_OUT, AD_TYPES, FORM,
+  SAVE_URL, CHECKBOX_FORM
+} from './constants.js';
 import { sendData } from './api.js';
-import { messageSuccess, messageError, enableForms } from './dom-utils.js';
+import { messageSuccess, messageError } from './dom-utils.js';
 import { getData, prepareData } from './store.js';
 import { setInitialStateMap, addPins, removePins } from './map.js';
 import { renderCard } from './card.js';
-import { setFeatureValue, setSelectValue, filterAds } from './filters.js';
-import { debounce } from './utils.js';
+import { setFeatureValue, setSelectValue, filterAd } from './filters.js';
+
 
 const prepareHeader = () => {
   HEADER.setAttribute('required', true);
@@ -29,14 +34,6 @@ const prepareForm = () => {
   prepareHeader();
   preparePrice();
   prepareAddress();
-};
-
-const LIMIT_MIN_PRICE = {
-  bungalow: 0,
-  flat: 1000,
-  hotel: 3000,
-  house: 5000,
-  palace: 10000,
 };
 
 const handLimitPrice = () => {
@@ -99,6 +96,8 @@ const compensationTimeout = () => {
 };
 
 const getStartValues = () => {
+  CHECKBOX_FORM.forEach((checkbox) => checkbox.checked = false);
+
   HEADER.value = '';
   DESCRIPTION.value = '';
   PRICE.value = '';
@@ -111,16 +110,6 @@ const getStartValues = () => {
   PRICE_HOUSING.value = 'any';
   ROOMS_HOUSING.value = 'any';
   GUESTS_HOUSING.value = 'any';
-  CHECKBOX_FORM.forEach((checkbox) => checkbox.checked = false);
-};
-
-const resetForms = (evt) => {
-  evt.preventDefault();
-  removePins();
-  getStartValues();
-  setInitialStateMap();
-  prepareData();
-  addPins(getData(), renderCard);
 };
 
 const onSubmitSuccess = () => {
@@ -139,21 +128,30 @@ const onSubmit = (evt) => {
 };
 
 const renderPins = () => {
-  prepareData(filterAds);
+  prepareData(filterAd);
   removePins();
   addPins(getData(), renderCard);
 };
 
-const onFeatureChange = (evt) => {
+const resetForms = (evt) => {
+  evt.preventDefault();
+  setInitialStateMap();
+  getStartValues();
+  removePins();
+  prepareData();
+  addPins(getData(), renderCard);
+};
+
+const getFeatureChange = (onChange) => (evt) => {
   const el = evt.target;
   const name = el.value;
   const value = el.checked;
 
   setFeatureValue(name, value);
-  renderPins();
+  onChange();
 };
 
-const onFilterChange = (evt) => {
+const getFilterChange = (onChange) => (evt) => {
   const el = evt.target;
   if (el.type === 'checkbox') {
     return;
@@ -162,10 +160,10 @@ const onFilterChange = (evt) => {
   const value = el.value;
 
   setSelectValue(name, value);
-  renderPins();
+  onChange();
 };
 
-const addValidators = () => {
+const addValidators = (onFiltersChange) => {
   HEADER.addEventListener('input', handleHeaderChange);
   PRICE.addEventListener('input', handlePriceChange);
   ROOM_NUMBER.addEventListener('change', handleRoomsCapacityChange);
@@ -176,8 +174,12 @@ const addValidators = () => {
   TIME_OUT.addEventListener('change', compensationTimeout);
   FORM.addEventListener('submit', onSubmit);
   FORM.addEventListener('reset', resetForms);
-  MAP_FILTERS.addEventListener('change', debounce(onFilterChange, 500));
-  FEATURES_HOUSING.addEventListener('change', debounce(onFeatureChange, 500));
+
+  const onFilterChange = getFilterChange(onFiltersChange);
+  const onFeatureChange = getFeatureChange(onFiltersChange);
+
+  MAP_FILTERS.addEventListener('change', onFilterChange);
+  FEATURES_HOUSING.addEventListener('change', onFeatureChange);
 };
 
 prepareForm();

@@ -18,6 +18,7 @@ const TYPE_HOUSING = MAP_FILTERS.querySelector('#housing-type');
 const PRICE_HOUSING = MAP_FILTERS.querySelector('#housing-price');
 const ROOMS_HOUSING = MAP_FILTERS.querySelector('#housing-rooms');
 const GUESTS_HOUSING = MAP_FILTERS.querySelector('#housing-guests');
+const RESET_BUTTON = document.querySelector('.ad-form__reset');
 
 const NUMBER_MIN = 1;
 const MIN_INDEX = 0;
@@ -25,8 +26,11 @@ const STRING_INDEX = 2;
 const LIMIT_SINGS = 5;
 const ROOM_MAX = 3;
 const GUESTS_MAX = 3;
+const PRICE_FILTER_MIN = 10000;
+const PRICE_FILTER_MAX = 50000;
 const PRICE_MAX = 1000000;
 const AVATAR_NUMBERS = 10;
+const TIMEOUT_DELAY = 500;
 const PHOTOS_ROOT = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking';
 const GUESTS = ['гостя', 'гостей', 'гостей'];
 const ROOMS = ['комната', 'комнаты', 'комнат'];
@@ -86,6 +90,14 @@ const Location = {
   LNG_MAX: 139.80000,
 };
 
+const LIMIT_MIN_PRICE = {
+  bungalow: 0,
+  flat: 1000,
+  hotel: 3000,
+  house: 5000,
+  palace: 10000,
+};
+
 export {
   BODY,
   MIN_INDEX,
@@ -125,5 +137,10 @@ export {
   PRICE_HOUSING,
   ROOMS_HOUSING,
   GUESTS_HOUSING,
-  CARD_TEMPLATE_ELEMENT
+  CARD_TEMPLATE_ELEMENT,
+  PRICE_FILTER_MIN,
+  PRICE_FILTER_MAX,
+  TIMEOUT_DELAY,
+  LIMIT_MIN_PRICE,
+  RESET_BUTTON
 };
