@@ -1,6 +1,6 @@
 import { renderCard } from './card.js';
 import { enableForms, disableForms, onError } from './dom-utils.js';
-import { addValidators } from './form.js';
+import { addValidators, renderPins } from './form.js';
 import { PIN_MAIN_MARKER, showMap, addAddress, addPins, removePins } from './map.js';
 import { DATA_URL, TIMEOUT_DELAY } from './constants.js';
 import { loadData } from './api.js';
@@ -9,12 +9,6 @@ import { debounce } from './utils.js';
 import { filterAd } from './filters.js';
 
 disableForms();
-
-const renderPins = () => {
-  removePins();
-  prepareData(filterAd);
-  addPins(getData(), renderCard);
-};
 
 const onDataLoad = (data) => {
   storeData(data);

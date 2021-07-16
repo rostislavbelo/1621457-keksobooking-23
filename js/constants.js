@@ -18,7 +18,6 @@ const TYPE_HOUSING = MAP_FILTERS.querySelector('#housing-type');
 const PRICE_HOUSING = MAP_FILTERS.querySelector('#housing-price');
 const ROOMS_HOUSING = MAP_FILTERS.querySelector('#housing-rooms');
 const GUESTS_HOUSING = MAP_FILTERS.querySelector('#housing-guests');
-const RESET_BUTTON = document.querySelector('.ad-form__reset');
 
 const NUMBER_MIN = 1;
 const MIN_INDEX = 0;
@@ -141,6 +140,5 @@ export {
   PRICE_FILTER_MIN,
   PRICE_FILTER_MAX,
   TIMEOUT_DELAY,
-  LIMIT_MIN_PRICE,
-  RESET_BUTTON
+  LIMIT_MIN_PRICE
 };

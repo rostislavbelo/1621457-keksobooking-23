@@ -128,18 +128,18 @@ const onSubmit = (evt) => {
 };
 
 const renderPins = () => {
-  prepareData(filterAd);
   removePins();
+  prepareData(filterAd);
   addPins(getData(), renderCard);
 };
 
 const resetForms = (evt) => {
   evt.preventDefault();
   setInitialStateMap();
-  getStartValues();
-  removePins();
   prepareData();
+  removePins();
   addPins(getData(), renderCard);
+  getStartValues();
 };
 
 const getFeatureChange = (onChange) => (evt) => {
