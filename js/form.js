@@ -10,7 +10,7 @@ import { messageSuccess, messageError } from './dom-utils.js';
 import { getData, prepareData } from './store.js';
 import { setInitialStateMap, addPins, removePins } from './map.js';
 import { renderCard } from './card.js';
-import { setFeatureValue, setSelectValue, filterAd, resetValuesFiltersMap } from './filters.js';
+import { setFeatureValue, setSelectValue, filterAd, resetFilterValues } from './filters.js';
 import { resetImages } from './upload-images.js';
 
 const prepareHeader = () => {
@@ -95,7 +95,17 @@ const compensationTimeout = () => {
   TIME_IN.value = TIME_OUT.value;
 };
 
+const renderPins = () => {
+  removePins();
+  prepareData(filterAd);
+  addPins(getData(), renderCard);
+};
+
 const resetStartValues = () => {
+  setInitialStateMap();
+  resetFilterValues();
+  resetImages();
+
   HEADER.value = '';
   DESCRIPTION.value = '';
   PRICE.value = '';
@@ -111,10 +121,18 @@ const resetStartValues = () => {
   GUESTS_HOUSING.value = 'any';
 
   CHECKBOX_FORM.forEach((checkbox) => checkbox.checked = false);
+
+  renderPins();
+};
+
+const resetForms = (evt) => {
+  evt.preventDefault();
+  resetStartValues();
 };
 
 const onSubmitSuccess = () => {
   messageSuccess();
+  resetStartValues();
 };
 
 const onSubmitError = () => {
@@ -126,21 +144,6 @@ const onSubmit = (evt) => {
 
   evt.preventDefault();
   sendData(SAVE_URL, formData, onSubmitSuccess, onSubmitError);
-};
-
-const renderPins = () => {
-  removePins();
-  prepareData(filterAd);
-  addPins(getData(), renderCard);
-};
-
-const resetForms = (evt) => {
-  evt.preventDefault();
-  setInitialStateMap();
-  resetValuesFiltersMap();
-  resetImages();
-  resetStartValues();
-  renderPins();
 };
 
 const getFeatureChange = (onChange) => (evt) => {

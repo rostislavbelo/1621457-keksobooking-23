@@ -18,6 +18,7 @@ const TYPE_HOUSING = MAP_FILTERS.querySelector('#housing-type');
 const PRICE_HOUSING = MAP_FILTERS.querySelector('#housing-price');
 const ROOMS_HOUSING = MAP_FILTERS.querySelector('#housing-rooms');
 const GUESTS_HOUSING = MAP_FILTERS.querySelector('#housing-guests');
+const EMPTY_VALUE = 0;
 const NUMBER_MIN = 1;
 const LIMIT_SINGS = 5;
 const ROOM_MAX = 3;
@@ -56,6 +57,7 @@ export {
   PRICE_MAX,
   LIMIT_SINGS,
   AD_TYPES,
+  EMPTY_VALUE,
   GUESTS,
   ROOMS,
   FORM,

@@ -1,4 +1,4 @@
-import { FORM } from './constants.js';
+import { FORM, EMPTY_VALUE } from './constants.js';
 
 const PREVIEW_IMG = FORM.querySelector('.ad-form-header__preview img');
 const AVATAR_IMG = FORM.querySelector('.ad-form-header__input');
@@ -8,49 +8,49 @@ const URL_IMG_AVATAR = 'img/muffin-grey.svg';
 
 const FILE_TYPES = ['jpeg', 'png', 'gif', 'jpg'];
 
-const downloadFotoHousing = () => {
-  const file = HOUSING_IMG.files[0];
+const unloadPreview = (inpit, previewHousing, previewAvatar) => {
+  const file = inpit.files[0];
   const fileName = file.name.toLowerCase();
-
   const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
 
   if (matches) {
     const reader = new FileReader();
 
     reader.addEventListener('load', () => {
-      IMAGES_PREVIEW.style.backgroundImage = `url(${reader.result})`;
-      IMAGES_PREVIEW.style.backgroundSize = '70px 70px';
+
+      if (previewHousing) {
+        previewHousing.style.backgroundImage = `url(${reader.result})`;//form
+        previewHousing.style.backgroundSize = '70px 70px';
+      }
+
+      if (previewAvatar) {
+        previewAvatar.src = reader.result;
+      }
+
     });
 
     reader.readAsDataURL(file);
   }
 };
 
-const downloadFotoUser = () => {
-  const file = AVATAR_IMG.files[0];
-  const fileName = file.name.toLowerCase();
+const showtPrewiewHousing = () => {
+  unloadPreview(HOUSING_IMG, IMAGES_PREVIEW, EMPTY_VALUE);
+};
 
-  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
-
-  if (matches) {
-    const reader = new FileReader();
-
-    reader.addEventListener('load', () => {
-      PREVIEW_IMG.src = reader.result;
-    });
-
-    reader.readAsDataURL(file);
-  }
+const showPrewiewAvatar = () => {
+  unloadPreview(AVATAR_IMG, EMPTY_VALUE, PREVIEW_IMG);
 };
 
 const resetImages = () => {
   IMAGES_PREVIEW.style = '';
   PREVIEW_IMG.src = URL_IMG_AVATAR;
+  AVATAR_IMG.value = '';
+  HOUSING_IMG.value = '';
 };
 
 const addEventListenersImages = () => {
-  AVATAR_IMG.addEventListener('change', downloadFotoUser);
-  HOUSING_IMG.addEventListener('change', downloadFotoHousing);
+  HOUSING_IMG.addEventListener('change', showtPrewiewHousing);
+  AVATAR_IMG.addEventListener('change', showPrewiewAvatar);
 };
 
 export { resetImages, addEventListenersImages };
