@@ -10,8 +10,8 @@ import { messageSuccess, messageError } from './dom-utils.js';
 import { getData, prepareData } from './store.js';
 import { setInitialStateMap, addPins, removePins } from './map.js';
 import { renderCard } from './card.js';
-import { setFeatureValue, setSelectValue, filterAd, resetValues } from './filters.js';
-
+import { setFeatureValue, setSelectValue, filterAd, resetValuesFiltersMap } from './filters.js';
+import { resetImages } from './upload-images.js';
 
 const prepareHeader = () => {
   HEADER.setAttribute('required', true);
@@ -95,10 +95,11 @@ const compensationTimeout = () => {
   TIME_IN.value = TIME_OUT.value;
 };
 
-const getStartValues = () => {
+const resetStartValues = () => {
   HEADER.value = '';
   DESCRIPTION.value = '';
   PRICE.value = '';
+  PRICE.placeholder = '1000';
   ROOM_NUMBER.value = '1';
   TYPE.value = 'flat';
   CAPACITY.value = '1';
@@ -136,11 +137,10 @@ const renderPins = () => {
 const resetForms = (evt) => {
   evt.preventDefault();
   setInitialStateMap();
-  resetValues();
-  prepareData();
-  removePins();
-  addPins(getData(), renderCard);
-  getStartValues();
+  resetValuesFiltersMap();
+  resetImages();
+  resetStartValues();
+  renderPins();
 };
 
 const getFeatureChange = (onChange) => (evt) => {
