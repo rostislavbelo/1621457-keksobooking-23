@@ -6,8 +6,8 @@ import { DATA_URL, TIMEOUT_DELAY } from './constants.js';
 import { loadData } from './api.js';
 import { getData, storeData, prepareData } from './store.js';
 import { debounce } from './utils.js';
+import { addEventListenersImages } from './upload-images.js';
 
-disableForms();
 
 const onDataLoad = (data) => {
   storeData(data);
@@ -20,6 +20,9 @@ const onMapSuccess = () => {
   addAddress(PIN_MAIN_MARKER);
   loadData(DATA_URL, onDataLoad, onError);
   addValidators(debounce((renderPins), TIMEOUT_DELAY));
+
 };
 
+addEventListenersImages();
+disableForms();
 showMap(onMapSuccess);

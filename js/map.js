@@ -1,4 +1,4 @@
-import { FORM } from './constants.js';
+import { FORM, LIMIT_SINGS } from './constants.js';
 
 const markers = [];
 
@@ -35,7 +35,7 @@ const PIN_MAIN_MARKER = L.marker(
 
 const addAddress = (markerName) => {
   const pinPositions = markerName.getLatLng();
-  ADDRESS.value = `${(pinPositions.lat).toFixed(5)}, ${(pinPositions.lng).toFixed(5)}`;
+  ADDRESS.value = `${(pinPositions.lat).toFixed(LIMIT_SINGS)}, ${(pinPositions.lng).toFixed(LIMIT_SINGS)}`;
 };
 
 const MAP = L.map('map-canvas');
@@ -97,7 +97,7 @@ const setInitialStateMap = () => {
 
   MAP.setView({
     lat: START_POSITION.LAT,
-    lng:START_POSITION.LNG,
+    lng: START_POSITION.LNG,
   }, START_MAP_SKALE);
 
   if (balun) {

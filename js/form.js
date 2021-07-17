@@ -11,7 +11,7 @@ import { getData, prepareData } from './store.js';
 import { setInitialStateMap, addPins, removePins } from './map.js';
 import { renderCard } from './card.js';
 import { setFeatureValue, setSelectValue, filterAd, resetValuesFiltersMap } from './filters.js';
-
+import { resetImages } from './upload-images.js';
 
 const prepareHeader = () => {
   HEADER.setAttribute('required', true);
@@ -110,8 +110,6 @@ const resetStartValues = () => {
   ROOMS_HOUSING.value = 'any';
   GUESTS_HOUSING.value = 'any';
 
-  resetValuesFiltersMap();
-
   CHECKBOX_FORM.forEach((checkbox) => checkbox.checked = false);
 };
 
@@ -139,6 +137,8 @@ const renderPins = () => {
 const resetForms = (evt) => {
   evt.preventDefault();
   setInitialStateMap();
+  resetValuesFiltersMap();
+  resetImages();
   resetStartValues();
   renderPins();
 };
