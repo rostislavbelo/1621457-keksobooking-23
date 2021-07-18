@@ -10,7 +10,7 @@ import { messageSuccess, messageError } from './dom-utils.js';
 import { getData, prepareData } from './store.js';
 import { setInitialStateMap, addPins, removePins } from './map.js';
 import { renderCard } from './card.js';
-import { setFeatureValue, setSelectValue, filterAd, resetValuesFiltersMap } from './filters.js';
+import { setFeatureValue, setSelectValue, filterAd, resetFilterValues } from './filters.js';
 import { resetImages } from './upload-images.js';
 
 const prepareHeader = () => {
@@ -36,7 +36,7 @@ const prepareForm = () => {
   prepareAddress();
 };
 
-const handLimitPrice = () => {
+const handleLimitPrice = () => {
   PRICE.placeholder = LIMIT_MIN_PRICE[TYPE.value];
   PRICE.min = LIMIT_MIN_PRICE[TYPE.value];
 };
@@ -87,15 +87,25 @@ const handleRoomsCapacityChange = () => {
   CAPACITY.reportValidity();
 };
 
-const compensationTimein = () => {
+const compensateTimeIn = () => {
   TIME_OUT.value = TIME_IN.value;
 };
 
-const compensationTimeout = () => {
+const compensateTimeOut = () => {
   TIME_IN.value = TIME_OUT.value;
 };
 
+const renderPins = () => {
+  removePins();
+  prepareData(filterAd);
+  addPins(getData(), renderCard);
+};
+
 const resetStartValues = () => {
+  setInitialStateMap();
+  resetFilterValues();
+  resetImages();
+
   HEADER.value = '';
   DESCRIPTION.value = '';
   PRICE.value = '';
@@ -111,10 +121,18 @@ const resetStartValues = () => {
   GUESTS_HOUSING.value = 'any';
 
   CHECKBOX_FORM.forEach((checkbox) => checkbox.checked = false);
+
+  renderPins();
+};
+
+const resetForms = (evt) => {
+  evt.preventDefault();
+  resetStartValues();
 };
 
 const onSubmitSuccess = () => {
   messageSuccess();
+  resetStartValues();
 };
 
 const onSubmitError = () => {
@@ -126,21 +144,6 @@ const onSubmit = (evt) => {
 
   evt.preventDefault();
   sendData(SAVE_URL, formData, onSubmitSuccess, onSubmitError);
-};
-
-const renderPins = () => {
-  removePins();
-  prepareData(filterAd);
-  addPins(getData(), renderCard);
-};
-
-const resetForms = (evt) => {
-  evt.preventDefault();
-  setInitialStateMap();
-  resetValuesFiltersMap();
-  resetImages();
-  resetStartValues();
-  renderPins();
 };
 
 const getFeatureChange = (onChange) => (evt) => {
@@ -169,10 +172,10 @@ const addValidators = (onFiltersChange) => {
   PRICE.addEventListener('input', handlePriceChange);
   ROOM_NUMBER.addEventListener('change', handleRoomsCapacityChange);
   CAPACITY.addEventListener('change', handleRoomsCapacityChange);
-  TYPE.addEventListener('change', handLimitPrice);
-  TYPE.addEventListener('change', handLimitPrice);
-  TIME_IN.addEventListener('change', compensationTimein);
-  TIME_OUT.addEventListener('change', compensationTimeout);
+  TYPE.addEventListener('change', handleLimitPrice);
+  TYPE.addEventListener('change', handleLimitPrice);
+  TIME_IN.addEventListener('change', compensateTimeIn);
+  TIME_OUT.addEventListener('change', compensateTimeOut);
   FORM.addEventListener('submit', onSubmit);
   FORM.addEventListener('reset', resetForms);
 

@@ -18,6 +18,7 @@ const TYPE_HOUSING = MAP_FILTERS.querySelector('#housing-type');
 const PRICE_HOUSING = MAP_FILTERS.querySelector('#housing-price');
 const ROOMS_HOUSING = MAP_FILTERS.querySelector('#housing-rooms');
 const GUESTS_HOUSING = MAP_FILTERS.querySelector('#housing-guests');
+const EMPTY_VALUE = 0;
 const NUMBER_MIN = 1;
 const LIMIT_SINGS = 5;
 const ROOM_MAX = 3;
@@ -31,6 +32,7 @@ const GUESTS = ['гостя', 'гостей', 'гостей'];
 const ROOMS = ['комната', 'комнаты', 'комнат'];
 const DATA_URL = 'https://23.javascript.pages.academy/keksobooking/data';
 const SAVE_URL = 'https://23.javascript.pages.academy/keksobooking';
+
 const AD_TYPES = {
   flat: 'Квартира',
   bungalow: 'Бунгало',
@@ -38,6 +40,7 @@ const AD_TYPES = {
   palace: 'Дворец',
   hotel: 'Отель',
 };
+
 const LIMIT_MIN_PRICE = {
   bungalow: 0,
   flat: 1000,
@@ -56,6 +59,7 @@ export {
   PRICE_MAX,
   LIMIT_SINGS,
   AD_TYPES,
+  EMPTY_VALUE,
   GUESTS,
   ROOMS,
   FORM,
