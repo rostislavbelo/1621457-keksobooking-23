@@ -32,6 +32,7 @@ const GUESTS = ['гостя', 'гостей', 'гостей'];
 const ROOMS = ['комната', 'комнаты', 'комнат'];
 const DATA_URL = 'https://23.javascript.pages.academy/keksobooking/data';
 const SAVE_URL = 'https://23.javascript.pages.academy/keksobooking';
+
 const AD_TYPES = {
   flat: 'Квартира',
   bungalow: 'Бунгало',
@@ -39,6 +40,7 @@ const AD_TYPES = {
   palace: 'Дворец',
   hotel: 'Отель',
 };
+
 const LIMIT_MIN_PRICE = {
   bungalow: 0,
   flat: 1000,

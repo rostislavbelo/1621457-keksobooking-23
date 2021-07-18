@@ -36,7 +36,7 @@ const prepareForm = () => {
   prepareAddress();
 };
 
-const handLimitPrice = () => {
+const handleLimitPrice = () => {
   PRICE.placeholder = LIMIT_MIN_PRICE[TYPE.value];
   PRICE.min = LIMIT_MIN_PRICE[TYPE.value];
 };
@@ -87,11 +87,11 @@ const handleRoomsCapacityChange = () => {
   CAPACITY.reportValidity();
 };
 
-const compensationTimein = () => {
+const compensateTimeIn = () => {
   TIME_OUT.value = TIME_IN.value;
 };
 
-const compensationTimeout = () => {
+const compensateTimeOut = () => {
   TIME_IN.value = TIME_OUT.value;
 };
 
@@ -172,10 +172,10 @@ const addValidators = (onFiltersChange) => {
   PRICE.addEventListener('input', handlePriceChange);
   ROOM_NUMBER.addEventListener('change', handleRoomsCapacityChange);
   CAPACITY.addEventListener('change', handleRoomsCapacityChange);
-  TYPE.addEventListener('change', handLimitPrice);
-  TYPE.addEventListener('change', handLimitPrice);
-  TIME_IN.addEventListener('change', compensationTimein);
-  TIME_OUT.addEventListener('change', compensationTimeout);
+  TYPE.addEventListener('change', handleLimitPrice);
+  TYPE.addEventListener('change', handleLimitPrice);
+  TIME_IN.addEventListener('change', compensateTimeIn);
+  TIME_OUT.addEventListener('change', compensateTimeOut);
   FORM.addEventListener('submit', onSubmit);
   FORM.addEventListener('reset', resetForms);
 
