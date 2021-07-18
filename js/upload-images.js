@@ -1,14 +1,19 @@
-import { FORM, EMPTY_VALUE } from './constants.js';
+import { FORM } from './constants.js';
 
-const PREVIEW_IMG = FORM.querySelector('.ad-form-header__preview img');
+const PREVIEW_AVATAR = FORM.querySelector('.ad-form-header__preview img');
 const AVATAR_IMG = FORM.querySelector('.ad-form-header__input');
 const HOUSING_IMG = FORM.querySelector('.ad-form__input');
-const IMAGES_PREVIEW = FORM.querySelector('.ad-form__photo');
+const PREVIEW_HOUSING = FORM.querySelector('.ad-form__photo');
 const URL_IMG_AVATAR = 'img/muffin-grey.svg';
+
+const ImageType = {
+  housing: PREVIEW_HOUSING,
+  avatar: PREVIEW_AVATAR,
+};
 
 const FILE_TYPES = ['jpeg', 'png', 'gif', 'jpg'];
 
-const unloadPreview = (inpit, previewHousing, previewAvatar) => {
+const unloadPreview = (inpit, type) => {
   const file = inpit.files[0];
   const fileName = file.name.toLowerCase();
   const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
@@ -18,13 +23,13 @@ const unloadPreview = (inpit, previewHousing, previewAvatar) => {
 
     reader.addEventListener('load', () => {
 
-      if (previewHousing) {
-        previewHousing.style.backgroundImage = `url(${reader.result})`;
-        previewHousing.style.backgroundSize = '70px 70px';
+      if (type === ImageType.housing) {
+        ImageType.housing.style.backgroundImage = `url(${reader.result})`;
+        ImageType.housing.style.backgroundSize = '70px 70px';
       }
 
-      if (previewAvatar) {
-        previewAvatar.src = reader.result;
+      if (type === ImageType.avatar) {
+        ImageType.avatar.src = reader.result;
       }
 
     });
@@ -34,16 +39,16 @@ const unloadPreview = (inpit, previewHousing, previewAvatar) => {
 };
 
 const showtPrewiewHousing = () => {
-  unloadPreview(HOUSING_IMG, IMAGES_PREVIEW, EMPTY_VALUE);
+  unloadPreview(HOUSING_IMG, ImageType.housing);
 };
 
 const showPrewiewAvatar = () => {
-  unloadPreview(AVATAR_IMG, EMPTY_VALUE, PREVIEW_IMG);
+  unloadPreview(AVATAR_IMG, ImageType.avatar);
 };
 
 const resetImages = () => {
-  IMAGES_PREVIEW.style = '';
-  PREVIEW_IMG.src = URL_IMG_AVATAR;
+  ImageType.housing.style = '';
+  ImageType.avatar.src = URL_IMG_AVATAR;
   AVATAR_IMG.value = '';
   HOUSING_IMG.value = '';
 };
