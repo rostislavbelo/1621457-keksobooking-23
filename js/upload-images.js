@@ -13,8 +13,8 @@ const ImageType = {
 
 const FILE_TYPES = ['jpeg', 'png', 'gif', 'jpg'];
 
-const unloadPreview = (inpit, type) => {
-  const file = inpit.files[0];
+const unloadPreview = (input, type) => {
+  const file = input.files[0];
   const fileName = file.name.toLowerCase();
   const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
 
