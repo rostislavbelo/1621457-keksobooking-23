@@ -37,7 +37,7 @@ const prepareForm = () => {
 };
 
 const handleLimitPrice = () => {
-  PRICE.placeholder = LIMIT_MIN_PRICE[TYPE.value];
+  PRICE.value = LIMIT_MIN_PRICE[TYPE.value];
   PRICE.min = LIMIT_MIN_PRICE[TYPE.value];
 };
 

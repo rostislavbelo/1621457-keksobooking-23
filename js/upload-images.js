@@ -27,8 +27,7 @@ const unloadPreview = (input, type) => {
         ImageType.housing.style.backgroundImage = `url(${reader.result})`;
         ImageType.housing.style.backgroundSize = '70px 70px';
       }
-
-      if (type === ImageType.avatar) {
+      else {
         ImageType.avatar.src = reader.result;
       }
 
