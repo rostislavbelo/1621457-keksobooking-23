@@ -19,7 +19,7 @@ const unloadPreview = (inpit, previewHousing, previewAvatar) => {
     reader.addEventListener('load', () => {
 
       if (previewHousing) {
-        previewHousing.style.backgroundImage = `url(${reader.result})`;//form
+        previewHousing.style.backgroundImage = `url(${reader.result})`;
         previewHousing.style.backgroundSize = '70px 70px';
       }
 
