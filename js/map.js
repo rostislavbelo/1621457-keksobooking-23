@@ -1,4 +1,4 @@
-import { FORM, LIMIT_SINGS } from './constants.js';
+import { FORM, LIMIT_SINGS, MAIN_PIN_IMAGE, PIN_IMAGE } from './constants.js';
 
 const markers = [];
 
@@ -11,13 +11,13 @@ const START_MAP_SKALE = 12;
 const ADDRESS = FORM.querySelector('#address');
 
 const PIN_IMG = L.icon({
-  iconUrl: 'img/main-pin.svg',
+  iconUrl: MAIN_PIN_IMAGE,
   iconSize: [52, 52],
   iconAnchor: [26, 52],
 });
 
 const PIN = L.icon({
-  iconUrl: 'img/pin.svg',
+  iconUrl: PIN_IMAGE,
   iconSize: [40, 40],
   iconAnchor: [20, 40],
 });

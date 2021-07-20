@@ -27,6 +27,8 @@ const renderCard = (ad) => {
   const offer = ad.offer;
   const author = ad.author;
   const cardElement = CARD_TEMPLATE_ELEMENT.cloneNode(true);
+  const photos = cardElement.querySelector('.popup__photos');
+  const photo = photos.querySelector('.popup__photo');
 
   cardElement.querySelector('.popup__text--address').textContent = offer.address;
   cardElement.querySelector('.popup__avatar').src = author.avatar;
@@ -37,8 +39,6 @@ const renderCard = (ad) => {
   cardElement.querySelector('.popup__description').textContent = offer.description;
   cardElement.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin} выезд до ${offer.checkout}`;
   const featureElementList = cardElement.querySelectorAll('.popup__feature');
-  const PHOTOS = cardElement.querySelector('.popup__photos');
-  const PHOTO = PHOTOS.querySelector('.popup__photo');
 
   const getClassfeature = (features) => `popup__feature--${features}`;
 
@@ -46,7 +46,7 @@ const renderCard = (ad) => {
 
   removeElement(featureElementList, offerFeatureClasses);
 
-  fillOrDeletePhoto(offer.photos, PHOTOS, PHOTO);
+  fillOrDeletePhoto(offer.photos, photos, photo);
 
   return cardElement;
 };

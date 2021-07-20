@@ -75,7 +75,7 @@ const removeElementEsc = () => {
   }
 };
 
-const messageSuccess = () => {
+const showMessageSuccess = () => {
   BODY.append(successElement);
   document.addEventListener('keydown', removeElementEsc);
   document.addEventListener('click', removeSuccess);
@@ -95,7 +95,7 @@ const removeErrorEsc = () => {
   }
 };
 
-const messageError = () => {
+const showMessageError = () => {
   BODY.append(errorElement);
   document.addEventListener('keydown', removeErrorEsc);
   document.addEventListener('click', removeError);
@@ -106,6 +106,6 @@ export {
   disableForms,
   enableForms,
   onError,
-  messageSuccess,
-  messageError
+  showMessageSuccess,
+  showMessageError
 };

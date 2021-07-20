@@ -6,7 +6,7 @@ import {
   SAVE_URL, CHECKBOX_FORM
 } from './constants.js';
 import { sendData } from './api.js';
-import { messageSuccess, messageError } from './dom-utils.js';
+import { showMessageSuccess, showMessageError } from './dom-utils.js';
 import { getData, prepareData } from './store.js';
 import { setInitialStateMap, addPins, removePins } from './map.js';
 import { renderCard } from './card.js';
@@ -131,12 +131,12 @@ const resetForms = (evt) => {
 };
 
 const onSubmitSuccess = () => {
-  messageSuccess();
+  showMessageSuccess();
   resetStartValues();
 };
 
 const onSubmitError = () => {
-  messageError();
+  showMessageError();
 };
 
 const onSubmit = (evt) => {
