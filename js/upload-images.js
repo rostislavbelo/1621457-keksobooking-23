@@ -1,17 +1,10 @@
-import { FORM } from './constants.js';
+import { URL_IMG_AVATAR, FILE_TYPES } from './constants.js';
+import { adForm } from './dom-utils.js';
 
-const PREVIEW_AVATAR = FORM.querySelector('.ad-form-header__preview img');
-const AVATAR_IMG = FORM.querySelector('.ad-form-header__input');
-const HOUSING_IMG = FORM.querySelector('.ad-form__input');
-const PREVIEW_HOUSING = FORM.querySelector('.ad-form__photo');
-const URL_IMG_AVATAR = 'img/muffin-grey.svg';
-
-const ImageType = {
-  housing: PREVIEW_HOUSING,
-  avatar: PREVIEW_AVATAR,
-};
-
-const FILE_TYPES = ['jpeg', 'png', 'gif', 'jpg'];
+const previewAvatar = adForm.querySelector('.ad-form-header__preview img');
+const avatarImage = adForm.querySelector('.ad-form-header__input');
+const housingImage = adForm.querySelector('.ad-form__input');
+const previewHousing = adForm.querySelector('.ad-form__photo');
 
 const unloadPreview = (input, type) => {
   const file = input.files[0];
@@ -23,12 +16,12 @@ const unloadPreview = (input, type) => {
 
     reader.addEventListener('load', () => {
 
-      if (type === ImageType.housing) {
-        ImageType.housing.style.backgroundImage = `url(${reader.result})`;
-        ImageType.housing.style.backgroundSize = '70px 70px';
+      if (type === previewHousing) {
+        previewHousing.style.backgroundImage = `url(${reader.result})`;
+        previewHousing.style.backgroundSize = '70px 70px';
       }
       else {
-        ImageType.avatar.src = reader.result;
+        previewAvatar.src = reader.result;
       }
 
     });
@@ -38,23 +31,23 @@ const unloadPreview = (input, type) => {
 };
 
 const showtPrewiewHousing = () => {
-  unloadPreview(HOUSING_IMG, ImageType.housing);
+  unloadPreview(housingImage, previewHousing);
 };
 
 const showPrewiewAvatar = () => {
-  unloadPreview(AVATAR_IMG, ImageType.avatar);
+  unloadPreview(avatarImage, previewAvatar);
 };
 
 const resetImages = () => {
-  ImageType.housing.style = '';
-  ImageType.avatar.src = URL_IMG_AVATAR;
-  AVATAR_IMG.value = '';
-  HOUSING_IMG.value = '';
+  previewHousing.style = '';
+  previewAvatar.src = URL_IMG_AVATAR;
+  avatarImage.value = '';
+  housingImage.value = '';
 };
 
 const addEventListenersImages = () => {
-  HOUSING_IMG.addEventListener('change', showtPrewiewHousing);
-  AVATAR_IMG.addEventListener('change', showPrewiewAvatar);
+  housingImage.addEventListener('change', showtPrewiewHousing);
+  avatarImage.addEventListener('change', showPrewiewAvatar);
 };
 
 export { resetImages, addEventListenersImages };

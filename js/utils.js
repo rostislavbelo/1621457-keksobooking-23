@@ -15,7 +15,6 @@ const getPluralIdx = (count) => {
 const pluralize = (count, plurals) => plurals[getPluralIdx(count)];
 const getPlural = (count, plurals) => `${count} ${pluralize(count, plurals)}`;
 
-
 function debounce(callback, timeoutDelay) {
   let timeoutId;
 

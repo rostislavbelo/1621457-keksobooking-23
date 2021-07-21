@@ -1,5 +1,16 @@
 import { getPlural } from './utils.js';
-import { AD_TYPES, GUESTS, ROOMS, CARD_TEMPLATE_ELEMENT } from './constants.js';
+import { GUESTS, ROOMS } from './constants.js';
+
+const cardTemplate = document.querySelector('#card');
+const cardTemplateElement = cardTemplate.content.querySelector('.popup');
+
+const adTypes = {
+  flat: 'Квартира',
+  bungalow: 'Бунгало',
+  house: 'Дом',
+  palace: 'Дворец',
+  hotel: 'Отель',
+};
 
 const removeElement = (elements, elementClasses) => {
   elements.forEach((element) => {
@@ -26,13 +37,13 @@ const fillOrDeletePhoto = (photos, block, element) => {
 const renderCard = (ad) => {
   const offer = ad.offer;
   const author = ad.author;
-  const cardElement = CARD_TEMPLATE_ELEMENT.cloneNode(true);
+  const cardElement = cardTemplateElement.cloneNode(true);
   const photos = cardElement.querySelector('.popup__photos');
   const photo = photos.querySelector('.popup__photo');
 
   cardElement.querySelector('.popup__text--address').textContent = offer.address;
   cardElement.querySelector('.popup__avatar').src = author.avatar;
-  cardElement.querySelector('.popup__type').textContent = AD_TYPES[offer.type];
+  cardElement.querySelector('.popup__type').textContent = adTypes[offer.type];
   cardElement.querySelector('.popup__title').textContent = offer.title;
   cardElement.querySelector('.popup__text--price').textContent = `${offer.price} ₽/ночь`;
   cardElement.querySelector('.popup__text--capacity').textContent = `${getPlural(offer.rooms, ROOMS)} для ${getPlural(offer.guests, GUESTS)}`;
@@ -51,6 +62,6 @@ const renderCard = (ad) => {
   return cardElement;
 };
 
-export { renderCard };
+export { renderCard, adTypes };
 
 

@@ -1,40 +1,41 @@
-import { BODY } from './constants.js';
-
-const AD_FORM = document.querySelector('.ad-form');
-const MAP_FILTRES = document.querySelector('.map__filters');
+const body = document.querySelector('body');
+const adForm = body.querySelector('.ad-form');
+const mapFilters = body.querySelector('.map__filters');
+const loadError = body.querySelector('#load-error').content;
+const errorButton = body.querySelector('.error__button');
 
 const FORMS = [
   {
-    element: AD_FORM,
+    element: adForm,
     disabledClass: 'ad-form--disabled',
     selector: 'fieldset.ad-form__element',
   },
   {
-    element: MAP_FILTRES,
+    element: mapFilters,
     disabledClass: 'map__filters--disabled',
     selector: 'select, fieldset',
   },
 ];
 
-const SUCCESS = BODY.querySelector('#success')
+const success = body.querySelector('#success')
   .content
   .querySelector('.success');
 
-const ERROR = BODY.querySelector('#error')
+const error = body.querySelector('#error')
   .content
   .querySelector('.error');
 
-const LOAD_ERROR = BODY.querySelector('#load-error').content;
-const ERROR_BUTTON = BODY.querySelector('.error__button');
+const errorElement = error.cloneNode(true);
+const successElement = success.cloneNode(true);
 
 const switchForm = (form, className, selector, enable) => {
+  const controls = form.querySelectorAll(selector);
+
   if (enable) {
     form.classList.remove(className);
   } else {
     form.classList.add(className);
   }
-
-  const controls = form.querySelectorAll(selector);
 
   controls.forEach((control) => {
     if (enable) {
@@ -57,11 +58,9 @@ const enableForms = () => switchForms(true);
 const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
 const onError = () => {
-  const cloneError = LOAD_ERROR.cloneNode(true);
-  BODY.append(cloneError);
+  const cloneError = loadError.cloneNode(true);
+  body.append(cloneError);
 };
-
-const successElement = SUCCESS.cloneNode(true);
 
 const removeSuccess = () => {
   successElement.remove();
@@ -76,12 +75,10 @@ const removeElementEsc = () => {
 };
 
 const showMessageSuccess = () => {
-  BODY.append(successElement);
+  body.append(successElement);
   document.addEventListener('keydown', removeElementEsc);
   document.addEventListener('click', removeSuccess);
 };
-
-const errorElement = ERROR.cloneNode(true);
 
 const removeError = () => {
   errorElement.remove();
@@ -96,10 +93,10 @@ const removeErrorEsc = () => {
 };
 
 const showMessageError = () => {
-  BODY.append(errorElement);
+  body.append(errorElement);
   document.addEventListener('keydown', removeErrorEsc);
   document.addEventListener('click', removeError);
-  ERROR_BUTTON.addEventListener('click', removeError);
+  errorButton.addEventListener('click', removeError);
 };
 
 export {
@@ -107,5 +104,7 @@ export {
   enableForms,
   onError,
   showMessageSuccess,
-  showMessageError
+  showMessageError,
+  body,
+  adForm
 };

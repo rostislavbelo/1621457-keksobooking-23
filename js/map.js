@@ -1,14 +1,11 @@
-import { FORM, LIMIT_SINGS, MAIN_PIN_IMAGE, PIN_IMAGE } from './constants.js';
+import { LIMIT_SINGS, MAIN_PIN_IMAGE, PIN_IMAGE, START_MAP_SKALE } from './constants.js';
 
 const markers = [];
 
-const START_POSITION = {
+const StartPosition = {
   LAT: 35.68378,
   LNG: 139.75423,
 };
-
-const START_MAP_SKALE = 12;
-const ADDRESS = FORM.querySelector('#address');
 
 const PIN_IMG = L.icon({
   iconUrl: MAIN_PIN_IMAGE,
@@ -24,8 +21,8 @@ const PIN = L.icon({
 
 const PIN_MAIN_MARKER = L.marker(
   {
-    lat: START_POSITION.LAT,
-    lng: START_POSITION.LNG,
+    lat: StartPosition.LAT,
+    lng: StartPosition.LNG,
   },
   {
     draggable: true,
@@ -33,19 +30,21 @@ const PIN_MAIN_MARKER = L.marker(
   },
 );
 
+const address = document.querySelector('#address');
+
 const addAddress = (markerName) => {
   const pinPositions = markerName.getLatLng();
-  ADDRESS.value = `${(pinPositions.lat).toFixed(LIMIT_SINGS)}, ${(pinPositions.lng).toFixed(LIMIT_SINGS)}`;
+  address.value = `${(pinPositions.lat).toFixed(LIMIT_SINGS)}, ${(pinPositions.lng).toFixed(LIMIT_SINGS)}`;
 };
 
-const MAP = L.map('map-canvas');
+const map = L.map('map-canvas');
 
 const showMap = (onLoadSuccess) => {
-  MAP.on('load', onLoadSuccess);
+  map.on('load', onLoadSuccess);
 
-  MAP.setView({
-    lat: START_POSITION.LAT,
-    lng: START_POSITION.LNG,
+  map.setView({
+    lat: StartPosition.LAT,
+    lng: StartPosition.LNG,
   }, START_MAP_SKALE);
 
   L.tileLayer(
@@ -53,9 +52,9 @@ const showMap = (onLoadSuccess) => {
     {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     },
-  ).addTo(MAP);
+  ).addTo(map);
 
-  PIN_MAIN_MARKER.addTo(MAP);
+  PIN_MAIN_MARKER.addTo(map);
 
   PIN_MAIN_MARKER.on('moveend', (evt) => {
     addAddress(evt.target);
@@ -73,7 +72,7 @@ const addPins = (points, card) => {
         PIN,
       });
 
-    Marker.addTo(MAP);
+    Marker.addTo(map);
     Marker.bindPopup(card(point),
       {
         keepInView: true,
@@ -84,20 +83,20 @@ const addPins = (points, card) => {
 };
 
 const resetAddress = () => {
-  ADDRESS.value = `${START_POSITION.LAT}, ${START_POSITION.LNG}`;
+  address.value = `${StartPosition.LAT}, ${StartPosition.LNG}`;
 };
 
 const setInitialStateMap = () => {
   const balun = document.querySelector('.leaflet-popup');
 
   PIN_MAIN_MARKER.setLatLng({
-    lat: START_POSITION.LAT,
-    lng: START_POSITION.LNG,
+    lat: StartPosition.LAT,
+    lng: StartPosition.LNG,
   });
 
-  MAP.setView({
-    lat: START_POSITION.LAT,
-    lng: START_POSITION.LNG,
+  map.setView({
+    lat: StartPosition.LAT,
+    lng: StartPosition.LNG,
   }, START_MAP_SKALE);
 
   if (balun) {
@@ -107,7 +106,7 @@ const setInitialStateMap = () => {
 };
 
 const removePins = () => {
-  markers.forEach((marker) => MAP.removeLayer(marker));
+  markers.forEach((marker) => map.removeLayer(marker));
 };
 
 export {

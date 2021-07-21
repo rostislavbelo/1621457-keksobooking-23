@@ -1,6 +1,4 @@
-import {
-  AVATAR_NUMBERS
-} from './constants.js';
+import { AVATAR_NUMBERS } from './constants.js';
 
 let initialData = null;
 let preparedData = null;

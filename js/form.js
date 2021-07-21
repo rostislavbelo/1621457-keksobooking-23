@@ -1,44 +1,64 @@
 import { HeaderLength, PriceValue, validateHeader } from './validate.js';
-import {
-  LIMIT_MIN_PRICE, TYPE_HOUSING, PRICE_HOUSING, ROOMS_HOUSING, GUESTS_HOUSING,
-  FEATURES_HOUSING, MAP_FILTERS, HEADER, DESCRIPTION, ADDRESS, PRICE,
-  ROOM_NUMBER, CAPACITY, TYPE, TIME_IN, TIME_OUT, AD_TYPES, FORM,
-  SAVE_URL, CHECKBOX_FORM
-} from './constants.js';
+import { SAVE_URL } from './constants.js';
 import { sendData } from './api.js';
-import { showMessageSuccess, showMessageError } from './dom-utils.js';
+import { showMessageSuccess, showMessageError, body, adForm } from './dom-utils.js';
 import { getData, prepareData } from './store.js';
 import { setInitialStateMap, addPins, removePins } from './map.js';
-import { renderCard } from './card.js';
+import { renderCard, adTypes } from './card.js';
 import { setFeatureValue, setSelectValue, filterAd, resetFilterValues } from './filters.js';
 import { resetImages } from './upload-images.js';
 
+const header = adForm.querySelector('#title');
+const description = adForm.querySelector('#description');
+const address = adForm.querySelector('#address');
+const price = adForm.querySelector('#price');
+const roomNumber = adForm.querySelector('#room_number');
+const capacity = adForm.querySelector('#capacity');
+const type = adForm.querySelector('#type');
+const timeIn = adForm.querySelector('#timein');
+const timeOut = adForm.querySelector('#timeout');
+const checkboxForm = body.querySelectorAll('input[type=checkbox]');
+const mapFilters = body.querySelector('.map__filters');
+const housingFeatures = mapFilters.querySelector('#housing-features');
+const housingType = mapFilters.querySelector('#housing-type');
+const housingPrice = mapFilters.querySelector('#housing-price');
+const housingRooms = mapFilters.querySelector('#housing-rooms');
+const housingGuests = mapFilters.querySelector('#housing-guests');
+
+const limitMinPrice = {
+  bungalow: 0,
+  flat: 1000,
+  hotel: 3000,
+  house: 5000,
+  palace: 10000,
+};
+
 const prepareHeader = () => {
-  HEADER.setAttribute('required', true);
-  HEADER.setAttribute('minlength', HeaderLength.MIN);
-  HEADER.setAttribute('maxlength', HeaderLength.MAX);
+  header.setAttribute('required', true);
+  header.setAttribute('minlength', HeaderLength.MIN);
+  header.setAttribute('maxlength', HeaderLength.MAX);
 };
 
 const preparePrice = () => {
-  PRICE.setAttribute('required', true);
-  PRICE.setAttribute('min', PriceValue.MIN);
-  PRICE.setAttribute('max', PriceValue.MAX);
+  price.setAttribute('required', true);
+  price.setAttribute('min', PriceValue.MIN);
+  price.setAttribute('max', PriceValue.MAX);
 };
 
 const prepareAddress = () => {
-  ADDRESS.setAttribute('readonly', true);
-  ADDRESS.setAttribute('placeholder', 'Введите адрес');
+  address.setAttribute('readonly', true);
+  address.setAttribute('placeholder', 'Введите адрес');
 };
 
-const prepareForm = () => {
+const prepareform = () => {
   prepareHeader();
   preparePrice();
   prepareAddress();
 };
 
 const handleLimitPrice = () => {
-  PRICE.value = LIMIT_MIN_PRICE[TYPE.value];
-  PRICE.min = LIMIT_MIN_PRICE[TYPE.value];
+  price.value = limitMinPrice[type.value];
+  price.min = limitMinPrice[type.value];
 };
 
 const handleHeaderChange = (evt) => {
@@ -58,8 +78,8 @@ const handlePriceChange = (evt) => {
   const element = evt.target;
   const value = element.value;
 
-  if (value < LIMIT_MIN_PRICE[TYPE.value] || value > PriceValue.MAX) {
-    element.setCustomValidity(`${AD_TYPES[TYPE.value]} от ${LIMIT_MIN_PRICE[TYPE.value]}, до ${PriceValue.MAX} за ночь`);
+  if (value < limitMinPrice[type.value] || value > PriceValue.MAX) {
+    element.setCustomValidity(`${adTypes[type.value]} от ${limitMinPrice[type.value]}, до ${PriceValue.MAX} за ночь`);
   } else {
     element.setCustomValidity('');
   }
@@ -68,8 +88,8 @@ const handlePriceChange = (evt) => {
 };
 
 const handleRoomsCapacityChange = () => {
-  const rooms = Number(ROOM_NUMBER.value);
-  const count = Number(CAPACITY.value);
+  const rooms = Number(roomNumber.value);
+  const count = Number(capacity.value);
 
   let message = '';
 
@@ -83,16 +103,16 @@ const handleRoomsCapacityChange = () => {
     }
   }
 
-  CAPACITY.setCustomValidity(message);
-  CAPACITY.reportValidity();
+  capacity.setCustomValidity(message);
+  capacity.reportValidity();
 };
 
 const compensateTimeIn = () => {
-  TIME_OUT.value = TIME_IN.value;
+  timeOut.value = timeIn.value;
 };
 
 const compensateTimeOut = () => {
-  TIME_IN.value = TIME_OUT.value;
+  timeIn.value = timeOut.value;
 };
 
 const renderPins = () => {
@@ -101,31 +121,36 @@ const renderPins = () => {
   addPins(getData(), renderCard);
 };
 
+const resetCheckbox = () => {
+  checkboxForm.forEach((checkbox) => checkbox.checked = false);
+};
+
+const resetInput = () => {
+  header.value = '';
+  description.value = '';
+  price.value = '';
+  price.placeholder = '1000';
+  roomNumber.value = '1';
+  type.value = 'flat';
+  capacity.value = '1';
+  timeIn.value = '12:00';
+  timeOut.value = '12:00';
+  housingType.value = 'any';
+  housingPrice.value = 'any';
+  housingRooms.value = 'any';
+  housingGuests.value = 'any';
+};
+
 const resetStartValues = () => {
   setInitialStateMap();
   resetFilterValues();
   resetImages();
-
-  HEADER.value = '';
-  DESCRIPTION.value = '';
-  PRICE.value = '';
-  PRICE.placeholder = '1000';
-  ROOM_NUMBER.value = '1';
-  TYPE.value = 'flat';
-  CAPACITY.value = '1';
-  TIME_IN.value = '12:00';
-  TIME_OUT.value = '12:00';
-  TYPE_HOUSING.value = 'any';
-  PRICE_HOUSING.value = 'any';
-  ROOMS_HOUSING.value = 'any';
-  GUESTS_HOUSING.value = 'any';
-
-  CHECKBOX_FORM.forEach((checkbox) => checkbox.checked = false);
-
+  resetInput();
+  resetCheckbox();
   renderPins();
 };
 
-const resetForms = (evt) => {
+const resetforms = (evt) => {
   evt.preventDefault();
   resetStartValues();
 };
@@ -168,24 +193,23 @@ const getFilterChange = (onChange) => (evt) => {
 };
 
 const addValidators = (onFiltersChange) => {
-  HEADER.addEventListener('input', handleHeaderChange);
-  PRICE.addEventListener('input', handlePriceChange);
-  ROOM_NUMBER.addEventListener('change', handleRoomsCapacityChange);
-  CAPACITY.addEventListener('change', handleRoomsCapacityChange);
-  TYPE.addEventListener('change', handleLimitPrice);
-  TYPE.addEventListener('change', handleLimitPrice);
-  TIME_IN.addEventListener('change', compensateTimeIn);
-  TIME_OUT.addEventListener('change', compensateTimeOut);
-  FORM.addEventListener('submit', onSubmit);
-  FORM.addEventListener('reset', resetForms);
+  header.addEventListener('input', handleHeaderChange);
+  price.addEventListener('input', handlePriceChange);
+  roomNumber.addEventListener('change', handleRoomsCapacityChange);
+  capacity.addEventListener('change', handleRoomsCapacityChange);
+  type.addEventListener('change', handleLimitPrice);
+  timeIn.addEventListener('change', compensateTimeIn);
+  timeOut.addEventListener('change', compensateTimeOut);
+  adForm.addEventListener('submit', onSubmit);
+  adForm.addEventListener('reset', resetforms);
 
   const onFilterChange = getFilterChange(onFiltersChange);
   const onFeatureChange = getFeatureChange(onFiltersChange);
 
-  MAP_FILTERS.addEventListener('change', onFilterChange);
-  FEATURES_HOUSING.addEventListener('change', onFeatureChange);
+  mapFilters.addEventListener('change', onFilterChange);
+  housingFeatures.addEventListener('change', onFeatureChange);
 };
 
-prepareForm();
+prepareform();
 
-export { addValidators, renderPins };
+export { addValidators, renderPins, body, adForm, adTypes };
