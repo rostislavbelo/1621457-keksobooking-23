@@ -19,7 +19,7 @@ const onMapSuccess = () => {
   enableForms();
   addAddress(PIN_MAIN_MARKER);
   loadData(DATA_URL, onDataLoad, onError);
-  addValidators(debounce((renderPins), TIMEOUT_DELAY));
+  addValidators(debounce(renderPins, TIMEOUT_DELAY));
 
 };
 
